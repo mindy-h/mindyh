@@ -1,22 +1,104 @@
+---
+interface Props {
+	title?: string;
+}
+
+const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@100..900&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	/* CSS Reset & Base Styles */
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Design Tokens */
+	:root {
+		/* Colors */
+		--color-bg: #000000;
+		--color-text: #F3EAD0;
+		--color-accent: #FBFF00;
+		--color-accent-dim: rgba(251, 255, 0, 0.3);
+		
+		/* Typography */
+		--font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		--font-display: 'Grenze Gotisch', 'Times New Roman', serif;
+		
+		/* Spacing */
+		--space-xs: 0.5rem;
+		--space-sm: 1rem;
+		--space-md: 1.5rem;
+		--space-lg: 2rem;
+		--space-xl: 3rem;
+		--space-2xl: 4rem;
+		--space-3xl: 6rem;
+		
+		/* Container */
+		--container-max: 1440px;
+		--container-padding: 2rem;
+	}
+
+	html {
+		font-family: var(--font-sans);
+		background-color: var(--color-bg);
+		color: var(--color-text);
+		scroll-behavior: smooth;
+	}
+
 	body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100vh;
+		overflow-x: hidden;
+		background: radial-gradient(156.61% 56.08% at -1.94% 2.78%, #2B2924 32.18%, #1A1712 92.4%);
+	}
+
+	/* Typography Base */
+	h1, h2, h3, h4, h5, h6 {
+		line-height: 1.2;
+		font-weight: 900;
+	}
+
+	p {
+		line-height: 1.6;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	/* Container Utility */
+	.container {
+		max-width: var(--container-max);
+		margin-inline: auto;
+		padding-inline: var(--container-padding);
 	}
 </style>

@@ -1,0 +1,97 @@
+---
+import arrow from '../assets/arrow.svg';
+
+interface Props {
+	href?: string;
+	variant?: 'primary' | 'secondary';
+	class?: string;
+}
+
+const { href, variant = 'primary', class: className } = Astro.props;
+const Element = href ? 'a' : 'button';
+---
+
+<Element href={href} class:list={['btn', `btn--${variant}`, className]}>
+	<slot />
+	<div class="btn__arrow">
+		<img src={arrow.src} alt="" aria-hidden="true" />
+	</div>
+</Element>
+
+<style>
+	.btn {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 1.2rem;
+		padding: .5rem .75rem .5rem 1.5rem;
+		font-size: 1.2rem;
+		font-weight: 500;
+		text-transform: capitalize;
+		border: 2px solid var(--color-accent);
+		border-radius: 5rem;
+		background: transparent;
+		color: var(--color-accent);
+		cursor: pointer;
+		transition: all 0.3s ease;
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	.btn::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 100%;
+		background: var(--color-accent-dim);
+		transition: width 0.3s ease;
+		z-index: -1;
+	}
+
+	.btn:hover::before {
+		width: 100%;
+	}
+
+	.btn:hover {
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	.btn__arrow {
+		display: flex;
+		align-items: right;
+		justify-content: right;
+		width: 45px;
+		height: 45px;
+		transition: transform 0.3s ease;
+		animation: pulse 1.6s ease-in-out infinite;
+	}
+
+	.btn__arrow img {
+		width: 100px;
+		object-fit: contain;
+		display: block;
+	}
+
+	.btn:hover .btn__arrow {
+		transform: translateY(2px);
+	}
+
+	@keyframes pulse {
+		0% { transform: translateY(0); }
+		50% { transform: translateY(3px); }
+		100% { transform: translateY(0); }
+	}
+
+	.btn--secondary {
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	.btn--secondary:hover {
+		background: var(--color-accent-dim);
+	}
+</style>
+

@@ -1,0 +1,235 @@
+---
+import Button from './Button.astro';
+import heroBg from '../assets/hero_bg.svg';
+import portrait from '../assets/portrait.png';
+---
+
+<section class="hero">
+	<div class="hero__bg" aria-hidden="true" data-hero-bg data-hero-src={heroBg.src}></div>
+	
+	<div class="container hero__container">
+		<div class="hero__content">
+			<h1 class="hero__title">
+				Designer. Listener.<br />
+				Process builder.
+			</h1>
+			<p class="hero__text">
+				I'm Mindy. Product and visual designer with 10+ years in enterprise and e-commerce, 
+				currently at Anheuser-Busch.
+			</p>
+            <p style="color: red;">TEST - Pipeline working!</p>
+			<Button href="#about">about</Button>
+		</div>
+
+		<div class="hero__portrait">
+			<div class="hero__portrait-frame">
+				<img src={portrait.src} alt="Mindy House portrait" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		display: flex;
+		align-items: center;
+		overflow: visible;
+		padding-block: 0.75rem 2rem;
+	}
+
+	.hero__bg {
+		position: absolute;
+		top: -12%;
+		left: -10%;
+		width: 120%;
+		height: 120%;
+		z-index: 0;
+		opacity: 0.6;
+		transform: rotate(2deg);
+		pointer-events: none;
+		transition: transform 0.2s ease-out;
+	}
+
+	.hero__bg svg {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.hero__container {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+
+	.hero__content {
+		max-width: 690px;
+	}
+
+	.hero__title {
+		font-family: var(--font-display);
+		font-size: clamp(2.5rem, 6vw, 96px);
+		font-weight: 400;
+		color: var(--color-accent);
+		margin-bottom: 1.5rem;
+		line-height: 1;
+		text-transform: capitalize;
+	}
+
+	.hero__text {
+		font-size: 1.125rem;
+		line-height: 1.6;
+		margin-bottom: 2rem;
+		max-width: 640px;
+	}
+
+	.hero__portrait {
+		position: relative;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		transform: translateY(8rem);
+		z-index: 10;
+	}
+
+	.hero__portrait-frame {
+		position: relative;
+		width: 100%;
+		max-width: 700px;
+		overflow: visible;
+	}
+
+	.hero__portrait-frame img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	@media (hover: none) and (pointer: coarse) {
+		.hero__bg {
+			transform: rotate(2deg);
+		}
+	}
+
+	/* Responsive */
+	@media (max-width: 1024px) {
+		.hero__container {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.hero__portrait {
+			transform: translateY(4rem);
+		}
+
+		.hero__portrait-frame {
+			max-width: 500px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero {
+			padding-block: 4rem 6rem;
+		}
+
+		.hero__title {
+			font-size: 2rem;
+		}
+
+		.hero__text {
+			font-size: 1rem;
+		}
+
+		.hero__portrait {
+			transform: translateY(2rem);
+		}
+
+		.hero__portrait-frame {
+			max-width: 320px;
+		}
+	}
+</style>
+
+<script>
+	const host = document.querySelector('[data-hero-bg]') as HTMLElement | null;
+	let svgEl: SVGSVGElement | null = null;
+	let paths: SVGGraphicsElement[] = [];
+	let frame: number | null = null;
+	let targetX = 0;
+	let targetY = 0;
+	let currentX = 0;
+	let currentY = 0;
+
+	const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+
+	const applyTransforms = () => {
+		if (!svgEl) return;
+		const depth = 6;
+		paths.forEach((p, idx) => {
+			const layer = (idx % depth) + 1;
+			const dx = (currentX * 0.1 * layer).toFixed(3);
+			const dy = (currentY * 0.1 * layer).toFixed(3);
+			p.style.transform = `translate(${dx}%, ${dy}%)`;
+			p.style.transformBox = 'fill-box';
+			p.style.transformOrigin = 'center';
+		});
+		svgEl.style.transform = `rotate(calc(2deg + ${currentX * 0.4}deg)) translate(${currentX * 0.25}%, ${currentY * 0.25}%)`;
+	};
+
+	const tick = () => {
+		currentX = lerp(currentX, targetX, 0.08);
+		currentY = lerp(currentY, targetY, 0.08);
+		applyTransforms();
+		if (Math.abs(currentX - targetX) > 0.01 || Math.abs(currentY - targetY) > 0.01) {
+			frame = requestAnimationFrame(tick);
+		} else {
+			frame = null;
+		}
+	};
+
+	const handleMove = (e: MouseEvent) => {
+		const { innerWidth, innerHeight } = window;
+		const x = e.clientX / innerWidth - 0.5;
+		const y = e.clientY / innerHeight - 0.5;
+		targetX = x * 3;
+		targetY = y * 3;
+		if (!frame) tick();
+	};
+
+	const init = async () => {
+		if (!host) return;
+		const src = host.dataset.heroSrc;
+		if (!src) return;
+		try {
+			const res = await fetch(src);
+			const text = await res.text();
+			const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+			svgEl = doc.querySelector('svg');
+			if (!svgEl) return;
+			paths = Array.from(svgEl.querySelectorAll<SVGGraphicsElement>('path, g'));
+			// Clean up attributes that may conflict with transforms
+			paths.forEach((p) => {
+				p.style.willChange = 'transform';
+			});
+			svgEl.style.width = '100%';
+			svgEl.style.height = '100%';
+			host.appendChild(svgEl);
+			if (window.matchMedia('(hover: hover)').matches) {
+				window.addEventListener('mousemove', handleMove, { passive: true });
+			}
+		} catch (err) {
+			console.error('Failed to load SVG for hero background', err);
+		}
+	};
+
+	if (typeof window !== 'undefined') {
+		init();
+	}
+</script>
+
