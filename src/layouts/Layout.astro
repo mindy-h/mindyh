@@ -10,7 +10,7 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +64,7 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		background-color: var(--color-bg);
 		color: var(--color-text);
 		scroll-behavior: smooth;
+		scroll-padding-top: 5rem;
 	}
 
 	body {
@@ -77,11 +78,12 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 	/* Typography Base */
 	h1, h2, h3, h4, h5, h6 {
 		line-height: 1.2;
-		font-weight: 900;
+		font-weight: 400;
 	}
 
 	p {
 		line-height: 1.6;
+		color: #F3EAD0;
 	}
 
 	a {
@@ -101,4 +103,152 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		margin-inline: auto;
 		padding-inline: var(--container-padding);
 	}
+
+	@media (max-width: 768px) {
+		:root {
+			--container-padding: 1.25rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		:root {
+			--container-padding: 1rem;
+		}
+	}
+
+	/* Fade-in animations */
+	.fade-in {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+	}
+
+	.fade-in.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Disable transitions during initial load */
+	.preload * {
+		transition: none !important;
+	}
 </style>
+
+<script>
+	// Global animations and effects
+	function initGlobalEffects() {
+		// Remove preload class after initial load
+		document.body.classList.add('preload');
+		setTimeout(() => {
+			document.body.classList.remove('preload');
+		}, 100);
+
+		// Fade-in Intersection Observer
+		const fadeObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+					}
+				});
+			},
+			{
+				threshold: 0.1,
+				rootMargin: '0px 0px -100px 0px'
+			}
+		);
+
+		// Setup fade-in observers
+		const fadeElements = document.querySelectorAll('.fade-in');
+		fadeElements.forEach(el => fadeObserver.observe(el));
+
+		// Parallax with Intersection Observer (global handler)
+		const PARALLAX_MAX_OFFSET = 50;
+		const parallaxElements = document.querySelectorAll('[data-parallax]') as NodeListOf<HTMLElement>;
+		
+		if (parallaxElements.length > 0) {
+			// Track which elements are in viewport
+			const visibleElements = new Set<HTMLElement>();
+
+			const parallaxObserver = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							visibleElements.add(entry.target as HTMLElement);
+						} else {
+							visibleElements.delete(entry.target as HTMLElement);
+						}
+					});
+				},
+				{ 
+					rootMargin: '100px 0px',
+					threshold: 0
+				}
+			);
+
+			parallaxElements.forEach((element) => {
+				element.style.transform = 'translateY(0)';
+				parallaxObserver.observe(element);
+			});
+
+			// Apply parallax only to visible elements
+			let ticking = false;
+			
+			const handleParallaxScroll = () => {
+				const viewportHeight = window.innerHeight;
+				
+				visibleElements.forEach((element) => {
+					const rect = element.getBoundingClientRect();
+					const speed = parseFloat(element.getAttribute('data-speed') || '0.5');
+					const progress = 1 - (rect.top / viewportHeight);
+					const offset = Math.min(progress * PARALLAX_MAX_OFFSET * speed, PARALLAX_MAX_OFFSET);
+					
+					element.style.transform = `translateY(${-offset}px)`;
+				});
+				
+				ticking = false;
+			};
+
+			const onScroll = () => {
+				if (!ticking) {
+					window.requestAnimationFrame(handleParallaxScroll);
+					ticking = true;
+				}
+			};
+
+			window.addEventListener('scroll', onScroll, { passive: true });
+			handleParallaxScroll(); // Initial call
+
+			// Cleanup for SPA navigation
+			return () => {
+				parallaxObserver.disconnect();
+				fadeObserver.disconnect();
+				window.removeEventListener('scroll', onScroll);
+			};
+		}
+
+		return () => {
+			fadeObserver.disconnect();
+		};
+	}
+
+	// Initialize on page load
+	if (typeof window !== 'undefined') {
+		let cleanup: (() => void) | undefined;
+
+		document.addEventListener('astro:page-load', () => {
+			cleanup = initGlobalEffects();
+		});
+
+		document.addEventListener('astro:before-preparation', () => {
+			cleanup?.();
+		});
+
+		// Initial load for non-Astro navigation
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initGlobalEffects);
+		} else {
+			initGlobalEffects();
+		}
+	}
+</script>

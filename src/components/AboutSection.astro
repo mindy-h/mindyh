@@ -1,0 +1,459 @@
+---
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import portrait2 from '../assets/portrait2.png';
+import img2002 from '../assets/2002.png';
+import img2010 from '../assets/2010.png';
+import img2012 from '../assets/2012.png';
+import img2015 from '../assets/2015.png';
+import img2016 from '../assets/2016.png';
+import img2022 from '../assets/2022.png';
+import img2025 from '../assets/2025.png';
+
+// Parallax configuration constants
+const PARALLAX_MAX_OFFSET = 50;
+const PARALLAX_SPEED_SLOW = 0.1;
+const PARALLAX_SPEED_MEDIUM = 0.15;
+
+const snapshots = [
+	{
+		year: '2002',
+		desc: 'On stage at the Creepy Crawl in St. Louis, MO',
+		image: img2002,
+	},
+	{
+		year: '2010',
+		desc: 'Somewhere in the Blue Mountains of Sydney, Australia',
+		image: img2010,
+	},
+	{
+		year: '2012',
+		desc: 'At the famous Haufbrauhaus in Munich, Germany',
+		image: img2012,
+	},
+	{
+		year: '2015',
+		desc: 'Lifting heavy shit on a stage at the Arnold in Columbus, OH',
+		image: img2015,
+	},
+	{
+		year: '2016',
+		desc: 'Gearing up to go off-roading in Reykjavik, Iceland',
+		image: img2016,
+	},
+	{
+		year: '2022',
+		desc: '"Let\'s put a pin in this and circle back next week!"',
+		image: img2022,
+	},
+	{
+		year: '2025',
+		desc: 'Little bit of karaoke at the City Museum with my buddy.',
+		image: img2025,
+	},
+];
+---
+
+<section id="about" class="about">
+	<div class="container about__container">
+		<div class="about__content" data-parallax data-speed={PARALLAX_SPEED_SLOW}>
+			<h2 class="about__title">Hail! I'm Mindy</h2>
+			<p class="about__text">
+				I'm a designer who's spent nearly two decades moving from print to web to UX, always driven by whatever I'm fixated on at the moment. Outside of work, that's looked like collecting antiques, teaching myself guitar and starting a band via Craigslist, competitive weightlifting, going to metal shows, and traveling everywhere from Iceland to Australia.  
+			</p>
+			<p class="about__text">
+				My career started as a freelance designer at The Riverfront Times and evolved through scrappy marketing agencies, e-commerce, and corporate environments. Today at Anheuser-Busch, I untangle complex legacy processes, design for internal tools, and lead UX strategy for our MarTech organization, working on brands you've definitely heard of.
+			</p>
+			<div class="about__actions">
+				<Button href="https://www.linkedin.com" variant="secondary" showArrow={false}>linkedin</Button>
+				<Button href="#" variant="secondary" showArrow={false}>resume</Button>
+			</div>
+		</div>
+
+		<div class="about__portrait" data-parallax data-speed={PARALLAX_SPEED_MEDIUM}>
+			<Image 
+				src={portrait2} 
+				alt="Mindy House portrait photo"
+				width={500}
+				height={600}
+				format="webp"
+				quality={85}
+			/>
+		</div>
+	</div>
+
+	<div class="container snapshots" data-parallax data-speed={PARALLAX_SPEED_SLOW}>
+		<div class="snapshots__header">
+			<h3 class="snapshots__title">Snapshots in time</h3>
+			<div class="snapshots__controls">
+				<button type="button" class="snapshots__btn" data-snap-prev aria-label="Previous snapshot">
+					<span aria-hidden="true">‹</span>
+				</button>
+				<button type="button" class="snapshots__btn" data-snap-next aria-label="Next snapshot">
+					<span aria-hidden="true">›</span>
+				</button>
+			</div>
+		</div>
+		<div 
+			class="snapshots__track" 
+			data-snap-track
+			role="region"
+			aria-label="Photo timeline carousel"
+			tabindex="0"
+		>
+			{snapshots.map((item, idx) => (
+				<article 
+					class="snapshot fade-in" 
+					style={`transition-delay: ${idx * 0.05}s;`}
+					role="group"
+					aria-label={`${item.year}: ${item.desc}`}
+				>
+					<div class="snapshot__image">
+						<Image 
+							src={item.image} 
+							alt={item.desc}
+							width={240}
+							height={250}
+							format="webp"
+							quality={80}
+							loading="lazy"
+							decoding="async"
+						/>
+					</div>
+					<div class="snapshot__body">
+						<p class="snapshot__year">{item.year}</p>
+						<p class="snapshot__desc">{item.desc}</p>
+					</div>
+				</article>
+			))}
+		</div>
+	</div>
+	<div class="about__blur" aria-hidden="true"></div>
+</section>
+
+<style>
+	.about {
+		position: relative;
+		padding: 4rem 0 3rem;
+		background: var(--color-bg-dark, #262521);
+		overflow-x: clip;
+		overflow-y: visible;
+		isolation: isolate;
+	}
+
+	.about__blur {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 200px;
+		background: linear-gradient(to top, var(--color-bg-dark, #262521) 0%, rgba(38, 37, 33, 0) 100%);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.about::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+	}
+
+	.about__container {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: 2.5rem;
+		align-items: center;
+		position: relative;
+		z-index: 1;
+	}
+
+	.about__title {
+		font-family: var(--font-display);
+		font-size: clamp(3rem, 4vw, 6rem);
+		color: var(--color-accent);
+		margin-bottom: 1rem;
+	}
+
+	.about__text {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: var(--color-text-light, #F3EAD0);
+		margin-bottom: 1.5rem;
+	}
+
+	.about__actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.about__portrait {
+		justify-self: center;
+		max-width: 500px;
+		border-radius: 1.25rem;
+		overflow: hidden;
+	}
+
+	.about__portrait img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.snapshots {
+		margin-top: 3rem;
+	}
+
+	.snapshots__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 1rem;
+	}
+
+	.snapshots__title {
+		font-family: var(--font-display);
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		color: var(--color-accent-alt, #D0B65F);
+	}
+
+	.snapshots__controls {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.snapshots__btn {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border: 1px solid var(--color-accent);
+		background: transparent;
+		color: var(--color-accent);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.25rem;
+		transition: background 0.2s ease, color 0.2s ease;
+	}
+
+	.snapshots__btn:hover,
+	.snapshots__btn:focus-visible {
+		background: var(--color-accent-dim);
+		color: var(--color-accent);
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
+	.snapshots__track {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(200px, 240px);
+		gap: 1rem;
+		overflow-x: auto;
+		padding: 0.5rem 0;
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-accent-dim) transparent;
+		scroll-behavior: smooth;
+	}
+
+	.snapshots__track::-webkit-scrollbar {
+		height: 8px;
+	}
+
+	.snapshots__track::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.snapshots__track::-webkit-scrollbar-thumb {
+		background: var(--color-accent-dim);
+		border-radius: 4px;
+	}
+
+	.snapshots__track:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 4px;
+	}
+
+	.snapshot {
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1rem;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+	}
+
+	.snapshot__image {
+		overflow: hidden;
+	}
+
+	.snapshot__image img {
+		width: 100%;
+		height: 250px;
+		display: block;
+		object-fit: cover;
+	}
+
+	.snapshot__body {
+		padding: 0.75rem 0.9rem 1rem;
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	.snapshot__year {
+		font-size: 1.1rem;
+		font-family: var(--font-display);
+		letter-spacing: 0.04em;
+		color: var(--color-text-light, #F3EAD0);
+	}
+
+	.snapshot__desc {
+		font-size: 0.8rem;
+		line-height: 1.4;
+		color: rgba(243, 234, 208, 0.65); /* Improved contrast */
+	}
+
+	@media (max-width: 1024px) {
+		.about__container {
+			grid-template-columns: 1fr;
+		}
+
+		.about__portrait {
+			order: -1;
+			max-width: 360px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.about {
+			padding: 3rem 0 2.5rem;
+		}
+
+		.snapshots__track {
+			grid-auto-columns: minmax(160px, 200px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.snapshots__track {
+			scroll-behavior: auto;
+		}
+		
+		.snapshot {
+			transition: none !important;
+		}
+	}
+</style>
+
+<script>
+	// Carousel functionality
+	function initCarousel() {
+		const track = document.querySelector('[data-snap-track]') as HTMLElement | null;
+		const btnPrev = document.querySelector('[data-snap-prev]') as HTMLButtonElement | null;
+		const btnNext = document.querySelector('[data-snap-next]') as HTMLButtonElement | null;
+
+		if (!track || !btnPrev || !btnNext) return;
+
+		const getScrollAmount = (): number => {
+			const card = track.querySelector('.snapshot') as HTMLElement | null;
+			return card ? card.offsetWidth + 16 : 220; // 16px gap
+		};
+
+		// Button click handlers (store references for cleanup)
+		const handlePrevClick = () => {
+			track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+		};
+
+		const handleNextClick = () => {
+			track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+		};
+
+		btnPrev.addEventListener('click', handlePrevClick);
+		btnNext.addEventListener('click', handleNextClick);
+
+		// Keyboard navigation for carousel
+		const handleKeydown = (e: KeyboardEvent) => {
+			if (e.key === 'ArrowLeft') {
+				e.preventDefault();
+				track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+			} else if (e.key === 'ArrowRight') {
+				e.preventDefault();
+				track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+			}
+		};
+
+		track.addEventListener('keydown', handleKeydown);
+
+		// Pointer drag to scroll
+		let isDown = false;
+		let startX = 0;
+		let scrollLeft = 0;
+
+		const onPointerDown = (e: PointerEvent) => {
+			isDown = true;
+			startX = e.clientX;
+			scrollLeft = track.scrollLeft;
+			track.setPointerCapture(e.pointerId);
+			track.style.cursor = 'grabbing';
+		};
+
+		const onPointerMove = (e: PointerEvent) => {
+			if (!isDown) return;
+			e.preventDefault();
+			const dx = e.clientX - startX;
+			track.scrollLeft = scrollLeft - dx;
+		};
+
+		const onPointerUp = (e: PointerEvent) => {
+			if (!isDown) return;
+			isDown = false;
+			track.style.cursor = 'grab';
+			if (track.hasPointerCapture(e.pointerId)) {
+				track.releasePointerCapture(e.pointerId);
+			}
+		};
+
+		track.addEventListener('pointerdown', onPointerDown);
+		track.addEventListener('pointermove', onPointerMove);
+		track.addEventListener('pointerup', onPointerUp);
+		track.addEventListener('pointercancel', onPointerUp);
+
+		// Cleanup function with proper handler references
+		return () => {
+			btnPrev.removeEventListener('click', handlePrevClick);
+			btnNext.removeEventListener('click', handleNextClick);
+			track.removeEventListener('keydown', handleKeydown);
+			track.removeEventListener('pointerdown', onPointerDown);
+			track.removeEventListener('pointermove', onPointerMove);
+			track.removeEventListener('pointerup', onPointerUp);
+			track.removeEventListener('pointercancel', onPointerUp);
+		};
+	}
+
+	// Initialize carousel
+	let carouselCleanup: (() => void) | undefined;
+
+	// For Astro SPA navigation
+	document.addEventListener('astro:page-load', () => {
+		carouselCleanup = initCarousel();
+	});
+
+	document.addEventListener('astro:before-preparation', () => {
+		carouselCleanup?.();
+	});
+
+	// For initial page load (non-SPA)
+	if (typeof window !== 'undefined') {
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', () => {
+				carouselCleanup = initCarousel();
+			});
+		} else {
+			// DOM already loaded
+			carouselCleanup = initCarousel();
+		}
+	}
+</script>

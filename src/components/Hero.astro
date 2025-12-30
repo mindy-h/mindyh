@@ -17,11 +17,10 @@ import portrait from '../assets/portrait.png';
 				I'm Mindy. Product and visual designer with 10+ years in enterprise and e-commerce, 
 				currently at Anheuser-Busch.
 			</p>
-            <p style="color: red;">TEST - Pipeline working!</p>
 			<Button href="#about">about</Button>
 		</div>
 
-		<div class="hero__portrait">
+		<div class="hero__portrait" data-parallax-portrait>
 			<div class="hero__portrait-frame">
 				<img src={portrait.src} alt="Mindy House portrait" />
 			</div>
@@ -36,6 +35,7 @@ import portrait from '../assets/portrait.png';
 		align-items: center;
 		overflow: visible;
 		padding-block: 0.75rem 2rem;
+		min-height: 100vh;
 	}
 
 	.hero__bg {
@@ -119,6 +119,10 @@ import portrait from '../assets/portrait.png';
 
 	/* Responsive */
 	@media (max-width: 1024px) {
+		.hero {
+			padding-block: 5rem 2rem;
+		}
+
 		.hero__container {
 			grid-template-columns: 1fr;
 			gap: 3rem;
@@ -135,23 +139,32 @@ import portrait from '../assets/portrait.png';
 
 	@media (max-width: 768px) {
 		.hero {
-			padding-block: 4rem 6rem;
+			padding-block: 5rem 3rem;
+			min-height: auto;
+		}
+
+		.hero__container {
+			gap: 2rem;
 		}
 
 		.hero__title {
-			font-size: 2rem;
+			font-size: clamp(2rem, 8vw, 3rem);
+			margin-bottom: 1rem;
 		}
 
 		.hero__text {
 			font-size: 1rem;
+			margin-bottom: 1.5rem;
 		}
 
 		.hero__portrait {
-			transform: translateY(2rem);
+			transform: translateY(0);
+			justify-content: center;
 		}
 
 		.hero__portrait-frame {
-			max-width: 320px;
+			max-width: 400px;
+			width: 90%;
 		}
 	}
 </style>
@@ -230,6 +243,43 @@ import portrait from '../assets/portrait.png';
 
 	if (typeof window !== 'undefined') {
 		init();
+	}
+
+	// Portrait parallax effect
+	const portrait = document.querySelector('[data-parallax-portrait]') as HTMLElement;
+	
+	const handlePortraitParallax = () => {
+		if (!portrait) return;
+		
+		const rect = portrait.getBoundingClientRect();
+		const viewportHeight = window.innerHeight;
+		
+		// Only apply parallax when element is in viewport
+		if (rect.top < viewportHeight && rect.bottom > 0) {
+			// Calculate how far through the viewport the element is (0 to 1)
+			const progress = 1 - (rect.top / viewportHeight);
+			// Apply subtle parallax based on scroll progress (max 20px movement)
+			const offset = progress * 20;
+			// Maintain the original 8rem translateY
+			portrait.style.transform = `translateY(calc(8rem + ${offset}px))`;
+		}
+	};
+	
+	// Use requestAnimationFrame for smooth performance
+	let portraitTicking = false;
+	const onPortraitScroll = () => {
+		if (!portraitTicking) {
+			window.requestAnimationFrame(() => {
+				handlePortraitParallax();
+				portraitTicking = false;
+			});
+			portraitTicking = true;
+		}
+	};
+	
+	if (typeof window !== 'undefined') {
+		window.addEventListener('scroll', onPortraitScroll, { passive: true });
+		handlePortraitParallax(); // Initial call
 	}
 </script>
 

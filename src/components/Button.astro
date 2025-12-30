@@ -5,17 +5,20 @@ interface Props {
 	href?: string;
 	variant?: 'primary' | 'secondary';
 	class?: string;
+	showArrow?: boolean;
 }
 
-const { href, variant = 'primary', class: className } = Astro.props;
+const { href, variant = 'primary', class: className, showArrow = true } = Astro.props;
 const Element = href ? 'a' : 'button';
 ---
 
-<Element href={href} class:list={['btn', `btn--${variant}`, className]}>
+<Element href={href} class:list={['btn', `btn--${variant}`, showArrow ? '' : 'btn--no-arrow', className]}>
 	<slot />
-	<div class="btn__arrow">
-		<img src={arrow.src} alt="" aria-hidden="true" />
-	</div>
+	{showArrow && (
+		<div class="btn__arrow">
+			<img src={arrow.src} alt="" aria-hidden="true" />
+		</div>
+	)}
 </Element>
 
 <style>
@@ -69,6 +72,11 @@ const Element = href ? 'a' : 'button';
 		animation: pulse 1.6s ease-in-out infinite;
 	}
 
+	.btn--no-arrow {
+		gap: 0.75rem;
+		padding-right: 1.5rem;
+	}
+
 	.btn__arrow img {
 		width: 100px;
 		object-fit: contain;
@@ -92,6 +100,27 @@ const Element = href ? 'a' : 'button';
 
 	.btn--secondary:hover {
 		background: var(--color-accent-dim);
+	}
+
+	@media (max-width: 768px) {
+		.btn {
+			font-size: 1rem;
+			padding: 0.4rem 0.6rem 0.4rem 1.25rem;
+			gap: 1rem;
+		}
+
+		.btn__arrow {
+			width: 36px;
+			height: 36px;
+		}
+
+		.btn__arrow img {
+			width: 80px;
+		}
+
+		.btn--no-arrow {
+			padding-right: 1.25rem;
+		}
 	}
 </style>
 

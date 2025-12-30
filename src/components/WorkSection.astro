@@ -1,0 +1,174 @@
+---
+import skylens from '../assets/skylens_img.png';
+import pricing from '../assets/pricing_img.png';
+import phorm from '../assets/phorm.png';
+---
+
+<section id="work" class="work">
+	<div class="container work__container">
+		<h2 class="work__title">Some of my work</h2>
+
+		<div class="work__grid">
+			<article class="work__card fade-in" data-parallax data-speed="0.15">
+				<div class="work__image">
+					<img src={skylens.src} alt="Skylens Light Panels" loading="lazy" />
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">e-commerce</p>
+					<h3 class="work__heading">Skylens Light Panels</h3>
+					<p class="work__text">
+						Brand identity, taxonomy, and a full ecommerce experience for a complex product line.
+					</p>
+					<a class="work__link" href="#work">details</a>
+				</div>
+			</article>
+
+			<article class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
+				<div class="work__image">
+					<img src={pricing.src} alt="Everyday Pricing" loading="lazy" />
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">business process</p>
+					<h3 class="work__heading">Everyday Pricing</h3>
+					<p class="work__text">
+						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
+					</p>
+					<a class="work__link" href="#work">details</a>
+				</div>
+			</article>
+
+			<article class="work__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
+				<div class="work__image">
+					<img src={phorm.src} alt="Phorm Protein" loading="lazy" />
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">web design</p>
+					<h3 class="work__heading">Phorm Protein</h3>
+					<p class="work__text">
+						One-pager for a new product launch, partnering with engineering to validate the build path.
+					</p>
+					<a class="work__link" href="#work">details</a>
+				</div>
+			</article>
+		</div>
+	</div>
+	<div class="work__blur"></div>
+</section>
+
+<style>
+	.work {
+		position: relative;
+		padding: 3rem 0 4rem;
+	}
+
+	.work__blur {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 200px;
+		background: linear-gradient(to top, rgba(26, 23, 18, 1) 0%, rgba(26, 23, 18, 0) 100%);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.work__title {
+		font-family: var(--font-display);
+		font-size: clamp(2.25rem, 4vw, 3rem);
+		color: var(--color-accent);
+		margin-bottom: 2rem;
+	}
+
+	.work__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.work__card {
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1.25rem;
+		overflow: hidden;
+		background: rgba(0, 0, 0, 0.35);
+		backdrop-filter: blur(4px);
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+	}
+
+	.work__image {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.work__image img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.work__body {
+		padding: 1.25rem 1.5rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.work__eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-size: 0.75rem;
+		color: var(--color-accent);
+	}
+
+	.work__heading {
+		font-size: 1.35rem;
+		font-weight: 700;
+		margin: 0;
+		color: #fff;
+	}
+
+	.work__text {
+		font-size: 0.95rem;
+		line-height: 1.5;
+		margin: 0.25rem 0 0.75rem;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.work__link {
+		margin-top: auto;
+		color: var(--color-accent);
+		text-transform: uppercase;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		font-size: 0.85rem;
+		align-self: flex-start;
+		border-bottom: 1px solid transparent;
+		transition: border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.work__link:hover {
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	@media (max-width: 1024px) {
+		.work__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.work {
+			padding: 2.5rem 0 3rem;
+		}
+		.work__grid {
+			grid-template-columns: 1fr;
+		}
+		.work__title {
+			margin-bottom: 1.5rem;
+		}
+	}
+</style>
+
