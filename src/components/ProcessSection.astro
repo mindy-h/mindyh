@@ -1,107 +1,90 @@
 ---
+import clarityIco from '../assets/clarity_ico.svg';
+import keyIcon from '../assets/key.svg';
+import gauntlet from '../assets/guantlet.svg';
 import figma from '../assets/figma.svg';
 import cursor from '../assets/cursor.svg';
 import claude from '../assets/claude.svg';
+import ps from '../assets/ps.svg';
 import ai from '../assets/ai.svg';
-import clarity from '../assets/clarity_ico.svg';
-import key from '../assets/key.svg';
+import clarity from '../assets/clarity.png';
 ---
 
 <section id="process" class="process">
 	<div class="container process__container">
 		<h2 class="process__title fade-in">How I work</h2>
-		<p class="process__intro fade-in">
-			I focus on building systems that scale. My process emphasizes clarity, collaboration, and 
-			tools that get out of the way so the work can speak for itself.
-		</p>
-
-		<div class="process__grid">
+		
+		<!-- Three principle cards -->
+		<div class="process__cards">
 			<article class="process__card fade-in" data-parallax data-speed="0.15">
 				<div class="process__icon">
-					<img src={figma.src} alt="Figma" />
+					<img src={clarityIco.src} alt="" />
 				</div>
-				<h3 class="process__heading">Design Systems</h3>
-				<p class="process__text">
-					Building scalable component libraries in Figma that maintain consistency across products 
-					and teams. Variables, auto-layout, and documentation built in.
-				</p>
+				<h3 class="process__card-title">Clarity from chaos</h3>
+				<p class="process__card-text">I build process where there is none.</p>
 			</article>
 
 			<article class="process__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
 				<div class="process__icon">
-					<img src={cursor.src} alt="Cursor" />
+					<img src={keyIcon.src} alt="" />
 				</div>
-				<h3 class="process__heading">Rapid Prototyping</h3>
-				<p class="process__text">
-					Using Cursor and Claude to quickly validate ideas with working prototypes. 
-					Ship fast, learn faster, iterate with confidence.
-				</p>
+				<h3 class="process__card-title">Listening is key</h3>
+				<p class="process__card-text">The best design starts with paying attention.</p>
 			</article>
 
 			<article class="process__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
 				<div class="process__icon">
-					<img src={ai.src} alt="AI Tools" />
+					<img src={gauntlet.src} alt="" />
 				</div>
-				<h3 class="process__heading">AI-Assisted Design</h3>
-				<p class="process__text">
-					Leveraging AI tools to accelerate workflows—from generating design variations 
-					to automating repetitive tasks so I can focus on strategy.
-				</p>
-			</article>
-
-			<article class="process__card fade-in" data-parallax data-speed="0.15" style="transition-delay: 0.3s;">
-				<div class="process__icon">
-					<img src={clarity.src} alt="Clarity" />
-				</div>
-				<h3 class="process__heading">User Research</h3>
-				<p class="process__text">
-					Analytics and user feedback drive every decision. Microsoft Clarity, heat maps, 
-					and direct interviews reveal what's actually working.
-				</p>
-			</article>
-
-			<article class="process__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.4s;">
-				<div class="process__icon">
-					<img src={key.src} alt="Key" />
-				</div>
-				<h3 class="process__heading">Stakeholder Alignment</h3>
-				<p class="process__text">
-					Translating business goals into design requirements. Regular check-ins, 
-					clear documentation, and proactive communication keep everyone aligned.
-				</p>
-			</article>
-
-			<article class="process__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.5s;">
-				<div class="process__icon">
-					<img src={claude.src} alt="Claude" />
-				</div>
-				<h3 class="process__heading">Process Documentation</h3>
-				<p class="process__text">
-					Creating clear, repeatable processes that teams can follow without me. 
-					Documenting decisions so they don't have to be remade.
-				</p>
+				<h3 class="process__card-title">Hands on work</h3>
+				<p class="process__card-text">From user flows to visual details.</p>
 			</article>
 		</div>
+
+		<!-- Quote and context section -->
+		<div class="process__content">
+			<div class="process__quote fade-in">
+				<p>I believe the best design work happens when we have a seat at the strategy table.</p>
+			</div>
+			
+			<div class="process__context fade-in">
+				<p class="process__philosophy">
+					Designers need a voice at the strategy level to deliver the best work. That means digging into the why alongside engineers and product owners, not just executing decisions. Our work requires trade-offs. Knowing where to make them is the difference between shipping something that works and shipping something we're proud of.
+				</p>
+				
+				<div class="process__tools">
+					<p class="process__tools-label">Current toolbox:</p>
+					<div class="process__tools-icons">
+						<div class="tool-icon">
+							<img src={figma.src} alt="Figma" />
+						</div>
+						<div class="tool-icon tool-icon--clarity">
+							<img src={clarity.src} alt="Clarity" />
+						</div>
+						<div class="tool-icon">
+							<img src={cursor.src} alt="Cursor" />
+						</div>
+						<div class="tool-icon">
+							<img src={claude.src} alt="Claude" />
+						</div>
+						<div class="tool-icon">
+							<img src={ps.src} alt="Photoshop" />
+						</div>
+						<div class="tool-icon">
+							<img src={ai.src} alt="Illustrator" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="process__blur"></div>
 </section>
 
 <style>
 	.process {
 		position: relative;
-		padding: 4rem 0 5rem;
+		padding: 6rem 0 5rem;
 		background: linear-gradient(180deg, rgba(26, 23, 18, 0) 0%, #0a0907 100%);
-	}
-
-	.process__blur {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 200px;
-		background: linear-gradient(to top, #0a0907 0%, rgba(10, 9, 7, 0) 100%);
-		pointer-events: none;
-		z-index: 2;
 	}
 
 	.process__container {
@@ -110,100 +93,203 @@ import key from '../assets/key.svg';
 	}
 
 	.process__title {
-		font-family: var(--font-display);
-		font-size: clamp(2.25rem, 4vw, 3rem);
-		color: var(--color-accent);
-		margin-bottom: 1.5rem;
+		font-family: 'Grenze Gotisch', var(--font-display);
+		font-size: clamp(3rem, 6vw, 4.5rem);
+		color: transparent;
+		-webkit-text-stroke: 2px var(--color-accent);
+		text-stroke: 2px var(--color-accent);
+		margin-bottom: 3rem;
 		text-align: center;
+		font-weight: 400;
+		letter-spacing: 0.02em;
 	}
 
-	.process__intro {
-		font-size: 1.125rem;
-		line-height: 1.6;
-		text-align: center;
-		max-width: 800px;
-		margin: 0 auto 3.5rem;
-		color: rgba(243, 234, 208, 0.9);
-	}
-
-	.process__grid {
+	/* Three principle cards */
+	.process__cards {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2.25rem;
+		margin-bottom: 5rem;
 	}
 
 	.process__card {
-		border: 1px solid rgba(251, 255, 0, 0.15);
-		border-radius: 1.25rem;
-		padding: 2rem 1.75rem;
-		background: rgba(0, 0, 0, 0.4);
-		backdrop-filter: blur(8px);
-		transition: all 0.3s ease;
+		background: rgba(33, 32, 28, 0.8);
+		backdrop-filter: blur(2px);
+		border-radius: 8px;
+		padding: 1.5rem;
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		align-items: center;
+		text-align: center;
+		gap: 0.75rem;
+		transition: all 0.3s ease;
 	}
 
 	.process__card:hover {
-		border-color: rgba(251, 255, 0, 0.4);
 		transform: translateY(-4px) !important;
-		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+		background: rgba(33, 32, 28, 0.95);
 	}
 
 	.process__icon {
-		width: 56px;
-		height: 56px;
+		height: 67px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: rgba(251, 255, 0, 0.1);
-		border-radius: 12px;
-		padding: 12px;
+		margin-bottom: 0.5rem;
 	}
 
 	.process__icon img {
+		height: 100%;
+		width: auto;
+		object-fit: contain;
+		filter: brightness(0) saturate(100%) invert(78%) sepia(30%) saturate(466%) hue-rotate(8deg) brightness(94%) contrast(88%);
+	}
+
+	.process__card-title {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 2rem;
+		font-weight: 300;
+		color: #D0B65F;
+		margin: 0;
+		line-height: 1.2;
+	}
+
+	.process__card-text {
+		font-size: 1rem;
+		color: #fff;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	/* Quote and context section */
+	.process__content {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr;
+		gap: 6rem;
+		align-items: start;
+	}
+
+	.process__quote {
+		position: sticky;
+		top: 6rem;
+	}
+
+	.process__quote p {
+		font-family: 'Grenze Gotisch', var(--font-display);
+		font-size: clamp(2.5rem, 4vw, 4.5rem);
+		line-height: 1.2;
+		color: #D0B65F;
+		margin: 0;
+		font-weight: 300;
+	}
+
+	.process__context {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.process__philosophy {
+		font-size: 1.25rem;
+		line-height: 1.75;
+		color: rgba(243, 234, 208, 0.95);
+		margin: 0;
+	}
+
+	.process__tools {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+	}
+
+	.process__tools-label {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 1.5rem;
+		color: #D0B65F;
+		margin: 0;
+		font-weight: 500;
+	}
+
+	.process__tools-icons {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.tool-icon {
+		width: 65px;
+		height: 65px;
+		background: #000;
+		border-radius: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.75rem;
+		transition: transform 0.2s ease;
+	}
+
+	.tool-icon:hover {
+		transform: translateY(-2px);
+	}
+
+
+	.tool-icon img {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-		filter: brightness(0) saturate(100%) invert(98%) sepia(89%) saturate(2298%) hue-rotate(359deg) brightness(105%) contrast(103%);
-	}
-
-	.process__heading {
-		font-size: 1.35rem;
-		font-weight: 700;
-		color: #fff;
-		margin: 0;
-	}
-
-	.process__text {
-		font-size: 0.95rem;
-		line-height: 1.6;
-		color: rgba(243, 234, 208, 0.85);
-		margin: 0;
 	}
 
 	@media (max-width: 1024px) {
-		.process__grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+		.process__cards {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			margin-bottom: 4rem;
+		}
+
+		.process__content {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.process__quote {
+			position: static;
+		}
+
+		.process__quote p {
+			font-size: clamp(2rem, 5vw, 3rem);
 		}
 	}
 
 	@media (max-width: 640px) {
 		.process {
-			padding: 3rem 0 4rem;
+			padding: 4rem 0 3rem;
 		}
 
-		.process__intro {
-			font-size: 1rem;
-			margin-bottom: 2.5rem;
-		}
-
-		.process__grid {
-			grid-template-columns: 1fr;
+		.process__title {
+			font-size: 2.5rem;
+			-webkit-text-stroke: 1.5px var(--color-accent);
+			margin-bottom: 2rem;
 		}
 
 		.process__card {
-			padding: 1.5rem 1.25rem;
+			padding: 1.25rem;
+		}
+
+		.process__card-title {
+			font-size: 1.5rem;
+		}
+
+		.process__philosophy {
+			font-size: 1.125rem;
+		}
+
+		.process__tools-icons {
+			gap: 0.75rem;
+		}
+
+		.tool-icon {
+			width: 56px;
+			height: 56px;
 		}
 	}
 </style>
