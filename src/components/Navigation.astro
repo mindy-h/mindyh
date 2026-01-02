@@ -1,5 +1,12 @@
 ---
 import logo from '../assets/logo.svg';
+
+interface Props {
+	useHomeAnchors?: boolean;
+}
+
+const { useHomeAnchors = false } = Astro.props;
+const anchor = (id: string) => `${useHomeAnchors ? '/#' : '#'}${id}`;
 ---
 
 <nav class="nav" aria-label="Main navigation">
@@ -10,9 +17,9 @@ import logo from '../assets/logo.svg';
 		</a>
 
 		<ul class="nav__menu">
-			<li><a href="#work">work</a></li>
-			<li><a href="#about">about</a></li>
-			<li><a href="#process">process</a></li>
+			<li><a href={anchor('work')}>work</a></li>
+			<li><a href={anchor('about')}>about</a></li>
+			<li><a href={anchor('process')}>process</a></li>
 		</ul>
 	</div>
 </nav>

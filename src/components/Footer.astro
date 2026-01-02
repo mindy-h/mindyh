@@ -1,5 +1,12 @@
 ---
 import logo from '../assets/logo.svg';
+
+interface Props {
+	useHomeAnchors?: boolean;
+}
+
+const { useHomeAnchors = false } = Astro.props;
+const anchor = (id: string) => `${useHomeAnchors ? '/#' : '#'}${id}`;
 ---
 
 <footer class="footer">
@@ -16,9 +23,9 @@ import logo from '../assets/logo.svg';
 				<div class="footer__nav-group">
 					<h3 class="footer__nav-title">Navigation</h3>
 					<ul class="footer__nav-list">
-						<li><a href="#work">Work</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#process">Process</a></li>
+						<li><a href={anchor('work')}>Work</a></li>
+						<li><a href={anchor('about')}>About</a></li>
+						<li><a href={anchor('process')}>Process</a></li>
 					</ul>
 				</div>
 
