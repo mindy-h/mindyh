@@ -256,22 +256,13 @@ const snapshots = [
 		gap: 1rem;
 		overflow-x: auto;
 		padding: 0.5rem 0;
-		scrollbar-width: thin;
-		scrollbar-color: var(--color-accent-dim) transparent;
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
 		scroll-behavior: smooth;
 	}
 
 	.snapshots__track::-webkit-scrollbar {
-		height: 8px;
-	}
-
-	.snapshots__track::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	.snapshots__track::-webkit-scrollbar-thumb {
-		background: var(--color-accent-dim);
-		border-radius: 4px;
+		display: none; /* Chrome, Safari, Opera */
 	}
 
 	.snapshots__track:focus-visible {

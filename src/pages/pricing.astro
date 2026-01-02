@@ -11,6 +11,16 @@ import commercial from '../assets/commercial.png';
 <Layout title="Enterprise Pricing - Mindy House">
 	<Navigation />
 	<main class="pricing-study">
+		<!-- Back Button -->
+		<div class="back-button-wrapper">
+			<div class="container">
+				<a href="/" class="back-button">
+					<span class="back-button__arrow">←</span>
+					<span class="back-button__text">Back</span>
+				</a>
+			</div>
+		</div>
+
 		<!-- Hero Section -->
 		<section class="hero">
 			<div class="container hero__container">
@@ -352,6 +362,16 @@ import commercial from '../assets/commercial.png';
 				</div>
 			</div>
 		</section>
+
+		<!-- Bottom Back Button -->
+		<div class="back-button-wrapper back-button-wrapper--bottom">
+			<div class="container">
+				<a href="/" class="back-button">
+					<span class="back-button__arrow">←</span>
+					<span class="back-button__text">Back</span>
+				</a>
+			</div>
+		</div>
 	</main>
 	<Footer />
 </Layout>
@@ -992,6 +1012,51 @@ import commercial from '../assets/commercial.png';
 
 		.process-label--pain {
 			margin: 1.5rem 0 1rem;
+		}
+	}
+
+	/* Back Button */
+	.back-button-wrapper {
+		padding: 2rem 0 0;
+	}
+
+	.back-button-wrapper--bottom {
+		padding: 4rem 0 2rem;
+	}
+
+	.back-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #D0B65F;
+		text-decoration: none;
+		font-size: 1rem;
+		font-weight: 500;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.back-button:hover {
+		transform: translateX(-4px);
+		opacity: 0.8;
+	}
+
+	.back-button__arrow {
+		font-size: 1.5rem;
+		line-height: 1;
+	}
+
+	.back-button__text {
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	@media (max-width: 768px) {
+		.back-button-wrapper {
+			padding: 1.5rem 0 0;
+		}
+
+		.back-button-wrapper--bottom {
+			padding: 3rem 0 1.5rem;
 		}
 	}
 </style>

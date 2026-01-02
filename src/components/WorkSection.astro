@@ -19,7 +19,7 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						Brand identity, taxonomy, and a full ecommerce experience for a complex product line.
 					</p>
-					<span class="work__link">details</span>
+					<span class="work__link">coming soon</span>
 				</div>
 			</a>
 
@@ -33,21 +33,7 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
 					</p>
-					<span class="work__link">details</span>
-				</div>
-			</a>
-
-			<a href="#work" class="work__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
-				<div class="work__image">
-					<img src={phorm.src} alt="Phorm Protein" loading="lazy" />
-				</div>
-				<div class="work__body">
-					<p class="work__eyebrow">web design</p>
-					<h3 class="work__heading">Phorm Protein</h3>
-					<p class="work__text">
-						One-pager for a new product launch, partnering with engineering to validate the build path.
-					</p>
-					<span class="work__link">details</span>
+					<span class="work__link">project details</span>
 				</div>
 			</a>
 		</div>
@@ -82,7 +68,7 @@ import phorm from '../assets/phorm.png';
 
 	.work__grid {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1.5rem;
 	}
 
@@ -110,12 +96,14 @@ import phorm from '../assets/phorm.png';
 	.work__image {
 		position: relative;
 		overflow: hidden;
+		max-height: 300px;
 	}
 
 	.work__image img {
 		display: block;
 		width: 100%;
-		height: auto;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.work__body {
@@ -158,11 +146,6 @@ import phorm from '../assets/phorm.png';
 		display: inline-block;
 	}
 
-	@media (max-width: 1024px) {
-		.work__grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-	}
 
 	@media (max-width: 640px) {
 		.work {

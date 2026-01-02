@@ -1,0 +1,130 @@
+---
+import heroBg from '../assets/hero_bg.svg';
+---
+
+<section class="cta">
+	<div class="cta__bg" aria-hidden="true">
+		<img src={heroBg.src} alt="" />
+	</div>
+	<div class="container cta__container">
+		<div class="cta__card">
+			<h2 class="cta__title">Designed in Figma. Built with Astro + Cursor. Shipped via Netlify.</h2>
+			<p class="cta__text">
+				This portfolio was built using Claude Code and Cursor, and pushed to production by a designer who believes in owning the full process.
+			</p>
+			<a href="mailto:hello@mindyh.com" class="cta__button">
+				<span>Let's talk</span>
+			</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta {
+		position: relative;
+		padding: 4rem 0 6rem;
+		overflow: hidden;
+	}
+
+	.cta__bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.3;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.cta__bg img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.cta__container {
+		position: relative;
+		z-index: 1;
+	}
+
+	.cta__card {
+		background: rgba(0, 0, 0, 0.35);
+		backdrop-filter: blur(4px);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 8px;
+		padding: 3rem;
+		text-align: center;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.cta__title {
+		font-family: var(--font-display);
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 300;
+		color: #D0B65F;
+		margin: 0 0 1.5rem;
+		line-height: 1.3;
+	}
+
+	.cta__text {
+		font-size: 1.125rem;
+		line-height: 1.7;
+		color: #F3EAD0;
+		margin: 0 0 2rem;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.cta__button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 2.5rem;
+		background: transparent;
+		border: 2px solid #D0B65F;
+		border-radius: 5rem;
+		color: #D0B65F;
+		text-decoration: none;
+		font-weight: 700;
+		font-size: 1rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		transition: all 0.3s ease;
+		cursor: pointer;
+	}
+
+	.cta__button:hover {
+		background: #D0B65F;
+		color: #1A1712;
+		transform: translateY(-2px);
+		box-shadow: 0 10px 30px rgba(208, 182, 95, 0.2);
+	}
+
+	@media (max-width: 768px) {
+		.cta {
+			padding: 3rem 0 4rem;
+		}
+
+		.cta__card {
+			padding: 2rem 1.5rem;
+		}
+
+		.cta__title {
+			margin-bottom: 1rem;
+		}
+
+		.cta__text {
+			font-size: 1rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.cta__button {
+			padding: 0.875rem 2rem;
+			font-size: 0.9rem;
+		}
+	}
+</style>
+
