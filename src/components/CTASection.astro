@@ -8,12 +8,13 @@ import heroBg from '../assets/hero_bg.svg';
 	</div>
 	<div class="container cta__container">
 		<div class="cta__card">
-			<h2 class="cta__title">Designed in Figma. Built with Astro + Cursor. Shipped via Netlify.</h2>
+			<h2 class="cta__title">Designed, built, and shipped by me.
+            </h2>
 			<p class="cta__text">
 				This portfolio was built using Claude Code and Cursor, and pushed to production by a designer who believes in owning the full process.
 			</p>
 			<a href="mailto:hello@mindyh.com" class="cta__button">
-				<span>Let's talk</span>
+				let's talk
 			</a>
 		</div>
 	</div>
@@ -49,13 +50,13 @@ import heroBg from '../assets/hero_bg.svg';
 	}
 
 	.cta__card {
-		background: rgba(0, 0, 0, 0.35);
+		background: rgba(0, 0, 0, 0.212);
 		backdrop-filter: blur(4px);
 		border: 1px solid rgba(255, 255, 255, 0.08);
 		border-radius: 8px;
 		padding: 3rem;
 		text-align: center;
-		max-width: 800px;
+		max-width: 1100px;
 		margin: 0 auto;
 	}
 
@@ -73,7 +74,7 @@ import heroBg from '../assets/hero_bg.svg';
 		line-height: 1.7;
 		color: #F3EAD0;
 		margin: 0 0 2rem;
-		max-width: 600px;
+		max-width: 850px;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -82,25 +83,21 @@ import heroBg from '../assets/hero_bg.svg';
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 1rem 2.5rem;
+		padding: 0.5rem 1.5rem;
 		background: transparent;
-		border: 2px solid #D0B65F;
+		border: 2px solid var(--color-accent);
 		border-radius: 5rem;
-		color: #D0B65F;
+		color: var(--color-accent);
 		text-decoration: none;
-		font-weight: 700;
-		font-size: 1rem;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 1.2rem;
+		text-transform: capitalize;
 		transition: all 0.3s ease;
 		cursor: pointer;
 	}
 
 	.cta__button:hover {
-		background: #D0B65F;
-		color: #1A1712;
-		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(208, 182, 95, 0.2);
+		background: var(--color-accent-dim);
 	}
 
 	@media (max-width: 768px) {
@@ -122,8 +119,8 @@ import heroBg from '../assets/hero_bg.svg';
 		}
 
 		.cta__button {
-			padding: 0.875rem 2rem;
-			font-size: 0.9rem;
+			padding: 0.4rem 1.25rem;
+			font-size: 1rem;
 		}
 	}
 </style>
