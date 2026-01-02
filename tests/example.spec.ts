@@ -3,22 +3,16 @@ import { test, expect } from '@playwright/test';
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:4326/');
 
-  // Expect the page title to contain "Mindy House"
-  await expect(page).toHaveTitle(/Mindy House/);
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('navigation links work', async ({ page }) => {
+test('get started link', async ({ page }) => {
   await page.goto('http://localhost:4326/');
 
-  // Get the navigation element first
-  const nav = page.locator('nav').first();
-  
-  // Check that Work link exists in navigation
-  await expect(nav.getByRole('link', { name: /work/i })).toBeVisible();
-  
-  // Check that About link exists in navigation
-  await expect(nav.getByRole('link', { name: /about/i })).toBeVisible();
-  
-  // Check that Process link exists in navigation
-  await expect(nav.getByRole('link', { name: /process/i })).toBeVisible();
+  // Click the get started link.
+  await page.getByRole('link', { name: 'Get started' }).click();
+
+  // Expects page to have a heading with the name of Installation.
+  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });

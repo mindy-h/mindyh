@@ -17,7 +17,7 @@ import portrait from '../assets/portrait.png';
 				I'm Mindy. Product and visual designer with 10+ years in enterprise and e-commerce, 
 				currently at Anheuser-Busch.
 			</p>
-			<Button href="#about">about</Button>
+			<Button href="#about">about me</Button>
 		</div>
 
 		<div class="hero__portrait" data-parallax-portrait>
@@ -94,7 +94,8 @@ import portrait from '../assets/portrait.png';
 		display: flex;
 		justify-content: flex-end;
 		align-items: flex-start;
-		transform: translateY(8rem);
+		--portrait-shift: 8rem;
+		transform: translateY(var(--portrait-shift));
 		z-index: 10;
 	}
 
@@ -129,7 +130,7 @@ import portrait from '../assets/portrait.png';
 		}
 
 		.hero__portrait {
-			transform: translateY(4rem);
+			--portrait-shift: 4rem;
 		}
 
 		.hero__portrait-frame {
@@ -139,17 +140,27 @@ import portrait from '../assets/portrait.png';
 
 	@media (max-width: 768px) {
 		.hero {
-			padding-block: 5rem 3rem;
-			min-height: auto;
+			padding-block: 4rem 5rem;
+			min-height: 100vh;
 		}
 
 		.hero__container {
-			gap: 2rem;
+			gap: 1.5rem;
+		}
+
+		.hero__bg {
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transform: rotate(0deg);
+			opacity: 0.6;
 		}
 
 		.hero__title {
-			font-size: clamp(2rem, 8vw, 3rem);
+			font-size: clamp(2rem, 12vw, 3rem);
 			margin-bottom: 1rem;
+			margin-top: 1.5rem;
 		}
 
 		.hero__text {
@@ -158,13 +169,12 @@ import portrait from '../assets/portrait.png';
 		}
 
 		.hero__portrait {
-			transform: translateY(0);
+			--portrait-shift: -2rem;
 			justify-content: center;
 		}
 
 		.hero__portrait-frame {
-			max-width: 400px;
-			width: 90%;
+			width: 100%;
 		}
 	}
 </style>
@@ -245,8 +255,13 @@ import portrait from '../assets/portrait.png';
 		init();
 	}
 
-	// Portrait parallax effect
+	// Portrait parallax effect (desktop only)
 	const portrait = document.querySelector('[data-parallax-portrait]') as HTMLElement;
+	const getBaseShift = () => {
+		if (!portrait) return '0px';
+		const value = getComputedStyle(portrait).getPropertyValue('--portrait-shift').trim();
+		return value || '0px';
+	};
 	
 	const handlePortraitParallax = () => {
 		if (!portrait) return;
@@ -260,8 +275,7 @@ import portrait from '../assets/portrait.png';
 			const progress = 1 - (rect.top / viewportHeight);
 			// Apply subtle parallax based on scroll progress (max 20px movement)
 			const offset = progress * 20;
-			// Maintain the original 8rem translateY
-			portrait.style.transform = `translateY(calc(8rem + ${offset}px))`;
+			portrait.style.transform = `translateY(calc(${getBaseShift()} + ${offset}px))`;
 		}
 	};
 	
@@ -277,7 +291,7 @@ import portrait from '../assets/portrait.png';
 		}
 	};
 	
-	if (typeof window !== 'undefined') {
+	if (typeof window !== 'undefined' && window.innerWidth > 1024) {
 		window.addEventListener('scroll', onPortraitScroll, { passive: true });
 		handlePortraitParallax(); // Initial call
 	}

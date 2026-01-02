@@ -105,6 +105,7 @@ const snapshots = [
 				<article 
 					class="snapshot fade-in" 
 					style={`transition-delay: ${idx * 0.05}s;`}
+					role="group"
 					aria-label={`${item.year}: ${item.desc}`}
 				>
 					<div class="snapshot__image">
@@ -192,7 +193,7 @@ const snapshots = [
 	.about__portrait {
 		justify-self: center;
 		max-width: 500px;
-		border-radius: 8px;
+		border-radius: 1.25rem;
 		overflow: hidden;
 	}
 
@@ -255,13 +256,22 @@ const snapshots = [
 		gap: 1rem;
 		overflow-x: auto;
 		padding: 0.5rem 0;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-accent-dim) transparent;
 		scroll-behavior: smooth;
 	}
 
 	.snapshots__track::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
+		height: 8px;
+	}
+
+	.snapshots__track::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.snapshots__track::-webkit-scrollbar-thumb {
+		background: var(--color-accent-dim);
+		border-radius: 4px;
 	}
 
 	.snapshots__track:focus-visible {
@@ -271,7 +281,7 @@ const snapshots = [
 
 	.snapshot {
 		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 8px;
+		border-radius: 1rem;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
