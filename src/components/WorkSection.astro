@@ -9,7 +9,7 @@ import phorm from '../assets/phorm.png';
 		<h2 class="work__title">Some of my work</h2>
 
 		<div class="work__grid">
-			<article class="work__card fade-in" data-parallax data-speed="0.15">
+			<a href="#work" class="work__card fade-in" data-parallax data-speed="0.15">
 				<div class="work__image">
 					<img src={skylens.src} alt="Skylens Light Panels" loading="lazy" />
 				</div>
@@ -19,11 +19,11 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						Brand identity, taxonomy, and a full ecommerce experience for a complex product line.
 					</p>
-					<a class="work__link" href="#work">details</a>
+					<span class="work__link">details</span>
 				</div>
-			</article>
+			</a>
 
-			<article class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
+			<a href="/pricing" class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
 				<div class="work__image">
 					<img src={pricing.src} alt="Everyday Pricing" loading="lazy" />
 				</div>
@@ -33,11 +33,11 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
 					</p>
-					<a class="work__link" href="#work">details</a>
+					<span class="work__link">details</span>
 				</div>
-			</article>
+			</a>
 
-			<article class="work__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
+			<a href="#work" class="work__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
 				<div class="work__image">
 					<img src={phorm.src} alt="Phorm Protein" loading="lazy" />
 				</div>
@@ -47,9 +47,9 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						One-pager for a new product launch, partnering with engineering to validate the build path.
 					</p>
-					<a class="work__link" href="#work">details</a>
+					<span class="work__link">details</span>
 				</div>
-			</article>
+			</a>
 		</div>
 	</div>
 	<div class="work__blur"></div>
@@ -88,7 +88,7 @@ import phorm from '../assets/phorm.png';
 
 	.work__card {
 		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 1.25rem;
+		border-radius: 8px;
 		overflow: hidden;
 		background: rgba(0, 0, 0, 0.35);
 		backdrop-filter: blur(4px);
@@ -96,6 +96,15 @@ import phorm from '../assets/phorm.png';
 		flex-direction: column;
 		min-height: 100%;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+		text-decoration: none;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+		cursor: pointer;
+		color: inherit;
+	}
+
+	.work__card:hover {
+		transform: translateY(-8px) !important;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
 	}
 
 	.work__image {
@@ -146,13 +155,7 @@ import phorm from '../assets/phorm.png';
 		letter-spacing: 0.04em;
 		font-size: 0.85rem;
 		align-self: flex-start;
-		border-bottom: 1px solid transparent;
-		transition: border-color 0.2s ease, color 0.2s ease;
-	}
-
-	.work__link:hover {
-		border-color: var(--color-accent);
-		color: var(--color-accent);
+		display: inline-block;
 	}
 
 	@media (max-width: 1024px) {

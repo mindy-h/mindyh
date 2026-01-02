@@ -1,0 +1,998 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import region from '../assets/region.png';
+import manage from '../assets/manage.png';
+import priceops from '../assets/priceops.png';
+import commercial from '../assets/commercial.png';
+---
+
+<Layout title="Enterprise Pricing - Mindy House">
+	<Navigation />
+	<main class="pricing-study">
+		<!-- Hero Section -->
+		<section class="hero">
+			<div class="container hero__container">
+				<div class="hero__content">
+					<h1 class="hero__title">Enterprise Pricing</h1>
+					<p class="hero__subtitle">
+						Pricing at a company this size doesn't live in one place. I mapped the chaos, defined the real workflow, and designed a tool people would actually use.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Meta Info Section -->
+		<section class="meta">
+			<div class="container">
+				<div class="meta__divider"></div>
+				<div class="meta__info">
+					<div class="meta__item">
+						<p class="meta__label">company</p>
+						<p class="meta__value">Anheuser-Busch</p>
+					</div>
+					<div class="meta__item">
+						<p class="meta__label">timeline</p>
+						<p class="meta__value">2025</p>
+					</div>
+					<div class="meta__item meta__item--wide">
+						<p class="meta__label">role</p>
+						<div class="meta__pills">
+							<span class="meta__pill">process design</span>
+							<span class="meta__pill">ux strategy</span>
+							<span class="meta__pill">stakeholder management</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section I: The Problem -->
+		<section class="section section--problem">
+			<div class="container">
+				<div class="section__grid">
+					<div class="section__content">
+						<div class="section__header">
+							<span class="section__number">I.</span>
+							<h2 class="section__title">The problem</h2>
+						</div>
+						<div class="section__text">
+							<p>
+								Pricing decisions at a company this size don't live in one place. When I joined this initiative, the process was fragmented across multiple systems: Excel was the preferred method (and had been for years), critical context lived in email threads, raw data came from a legacy internal tool that queried the data, and there was an existing solution in Palantir that nobody wanted to use.
+							</p>
+							<p>
+								The Palantir implementation was technically capable but widely distrusted. Users found the UI overly complex for what they actually needed, and more critically, they didn't trust the data. When people don't trust the system, they build workarounds. In this case, the workaround was a sprawling network of spreadsheets that only a few people fully understood.
+							</p>
+						</div>
+					</div>
+					<div class="quote-card">
+						<p class="quote-card__text">
+							"Some of the data you end up seeing [in Palantir] can be inaccurate. It's not very user-friendly visually, and it doesn't build trust"
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			<div class="divider"></div>
+		</div>
+
+		<!-- Section II: My Role -->
+		<section class="section section--role">
+			<div class="container">
+				<div class="section__grid section__grid--role">
+					<div class="section__content section__content--narrow">
+						<div class="section__header">
+							<span class="section__number">II.</span>
+							<h2 class="section__title">My role</h2>
+						</div>
+						<p class="section__text">
+							My job wasn't to make it pretty. It was to make it make sense. I partnered with my PM to untangle what existed and define what the workflow actually needed to be.
+						</p>
+					</div>
+					<div class="bullet-list">
+						<div class="bullet-list__item">
+							<span class="bullet-list__arrow">→</span>
+							<p>Led discovery sessions with stakeholders across multiple business units</p>
+						</div>
+						<div class="bullet-list__item">
+							<span class="bullet-list__arrow">→</span>
+							<p>Mapped existing processes and identified bottlenecks</p>
+						</div>
+						<div class="bullet-list__item">
+							<span class="bullet-list__arrow">→</span>
+							<p>Defined requirements in collaboration with PM and engineering</p>
+						</div>
+						<div class="bullet-list__item">
+							<span class="bullet-list__arrow">→</span>
+							<p>Designed the end-to-end workflow and interface</p>
+						</div>
+						<div class="bullet-list__item">
+							<span class="bullet-list__arrow">→</span>
+							<p>Facilitated alignment between teams with competing priorities</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			<div class="divider"></div>
+		</div>
+
+		<!-- Section III: The Approach -->
+		<section class="section section--approach">
+			<div class="container">
+				<div class="section__header">
+					<span class="section__number">III.</span>
+					<h2 class="section__title">The approach</h2>
+				</div>
+				<p class="section__intro">
+					Before designing anything, we needed to understand what actually happened. The existing process had evolved organically over years, with different teams doing different versions of the same thing.
+				</p>
+
+				<div class="approach-grid">
+					<div class="approach-card">
+						<span class="approach-card__number">01</span>
+						<h3 class="approach-card__title">Discovery</h3>
+						<p class="approach-card__text">
+							Interviewed stakeholders across business units to understand how pricing decisions were actually made versus how they were supposed to be made.
+						</p>
+					</div>
+					<div class="approach-card">
+						<span class="approach-card__number">02</span>
+						<h3 class="approach-card__title">Process Mapping</h3>
+						<p class="approach-card__text">
+							Documented the current state: who does what, where data lives, what breaks down, and where decisions get stuck.
+						</p>
+					</div>
+					<div class="approach-card">
+						<span class="approach-card__number">03</span>
+						<h3 class="approach-card__title">Definition</h3>
+						<p class="approach-card__text">
+							Worked with PM to define what the workflow should be, identifying which steps were essential and which were artifacts of outdated processes.
+						</p>
+					</div>
+					<div class="approach-card">
+						<span class="approach-card__number">04</span>
+						<h3 class="approach-card__title">Design & Validation</h3>
+						<p class="approach-card__text">
+							Designed the tool interface and workflow, validating with users at each stage to ensure it matched how they actually needed to work.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			<div class="divider"></div>
+		</div>
+
+		<!-- Section IV: Artifacts / Pricing Users -->
+		<section class="section section--artifacts">
+			<div class="container">
+				<div class="section__header">
+					<span class="section__number">IV.</span>
+					<h2 class="section__title">Artifacts</h2>
+				</div>
+				
+				<h3 class="subsection-title">Pricing Users</h3>
+				
+				<div class="users-grid">
+					<div class="user-card">
+						<div class="user-card__avatar">
+							<img src={region.src} alt="Region Pricing Analyst" />
+						</div>
+						<h4 class="user-card__role">Region Pricing Analyst</h4>
+						<p class="user-card__description">
+							Submit data-driven pricing decisions that maximize regional sales while adhering to company policies.
+						</p>
+						<p class="user-card__note">
+							Highest PCR (Price Change Request) submission volume
+						</p>
+					</div>
+
+					<div class="user-card">
+						<div class="user-card__avatar">
+							<img src={manage.src} alt="Revenue Management" />
+						</div>
+						<h4 class="user-card__role">Revenue Management</h4>
+						<p class="user-card__description">
+							Review PCRs to ensure alignment with pricing strategy, revenue targets, and brand principles.
+						</p>
+						<p class="user-card__note">
+							10-15K reviews annually
+						</p>
+					</div>
+
+					<div class="user-card">
+						<div class="user-card__avatar">
+							<img src={priceops.src} alt="Price Ops Coordinator" />
+						</div>
+						<h4 class="user-card__role">Price Ops Coordinator</h4>
+						<p class="user-card__description">
+							Execute approved changes in system of record and bring pricing decisions to market.
+						</p>
+						<p class="user-card__note">
+							Most time spent in tool
+						</p>
+					</div>
+
+					<div class="user-card">
+						<div class="user-card__avatar">
+							<img src={commercial.src} alt="Commercial Manager" />
+						</div>
+						<h4 class="user-card__role">Commercial Manager</h4>
+						<p class="user-card__description">
+							Ensure pricing strategies support commercial team goals and market competitiveness.
+						</p>
+						<p class="user-card__note">
+							Initiates pricing requests
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container">
+			<div class="divider"></div>
+		</div>
+
+		<!-- Section V: Process -->
+		<section class="section section--process">
+			<div class="container">
+				<div class="section__header">
+					<span class="section__number">V.</span>
+					<h2 class="section__title">Process</h2>
+				</div>
+				
+				<h3 class="subsection-title subsection-title--user-journey">User Journey</h3>
+				
+				<!-- Before Section -->
+				<div class="process-section">
+					<p class="process-label process-label--before">Before - Fragmented across systems</p>
+					
+					<div class="flow-diagram">
+						<!-- Top row -->
+						<div class="flow-row">
+							<div class="flow-group">
+								<p class="flow-group__label">external triggers</p>
+								<div class="flow-cards">
+									<div class="flow-card">Competition adjusts price</div>
+									<div class="flow-card">Wholesaler requests change</div>
+								</div>
+							</div>
+							<span class="flow-arrow">→</span>
+							<div class="flow-group">
+								<p class="flow-group__label">Field communication</p>
+								<div class="flow-cards">
+									<div class="flow-card flow-card--single">Wholesaler → CD → Email to analyst</div>
+								</div>
+							</div>
+							<span class="flow-arrow">→</span>
+							<div class="flow-group">
+								<p class="flow-group__label">handoff</p>
+								<div class="flow-cards">
+									<div class="flow-card flow-card--single">Region RMSI receives request</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- System fragmentation label -->
+						<p class="process-label process-label--pain">Internal system fragmentation (the pain)</p>
+
+						<!-- Fragmentation flow - Row 1 -->
+						<div class="flow-row flow-row--tight">
+							<div class="flow-card flow-card--sm">PCC</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">PRC 2.0</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Manual selections</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Palantir</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Update tracking #</div>
+						</div>
+
+						<!-- Fragmentation flow - Row 2 -->
+						<div class="flow-row flow-row--tight">
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Tag 2nd reviewer</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">RMIS data pull</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Manual verification</div>
+							<span class="flow-arrow flow-arrow--sm">→</span>
+							<div class="flow-card flow-card--sm">Email confirmation</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- After Section -->
+				<div class="process-section process-section--after">
+					<p class="process-label process-label--after">after - simplified flow</p>
+					
+					<div class="journey-grid">
+						<div class="journey-card">
+							<span class="journey-card__number">01</span>
+							<h4 class="journey-card__title">external trigger</h4>
+							<p class="journey-card__text">Competition or wholesaler initiates request</p>
+						</div>
+						<div class="journey-card">
+							<span class="journey-card__number">02</span>
+							<h4 class="journey-card__title">RMSI Receives</h4>
+							<p class="journey-card__text">Analyst identifies pricing action needed</p>
+						</div>
+						<div class="journey-card journey-card--highlight">
+							<span class="journey-card__number journey-card__number--highlight">03</span>
+							<h4 class="journey-card__title journey-card__title--highlight">Create & Submit</h4>
+							<p class="journey-card__text">Simulate, review, submit in one place</p>
+						</div>
+						<div class="journey-card journey-card--highlight">
+							<span class="journey-card__number journey-card__number--highlight">04</span>
+							<h4 class="journey-card__title journey-card__title--highlight">Review & Approve</h4>
+							<p class="journey-card__text">Routing and tracking automated</p>
+						</div>
+						<div class="journey-card journey-card--highlight">
+							<span class="journey-card__number journey-card__number--highlight">05</span>
+							<h4 class="journey-card__title journey-card__title--highlight">Execute</h4>
+							<p class="journey-card__text">Push to system of record</p>
+						</div>
+						<div class="journey-card">
+							<span class="journey-card__number">06</span>
+							<h4 class="journey-card__title">Confirm</h4>
+							<p class="journey-card__text">Automated notification to requestor</p>
+						</div>
+					</div>
+					
+					<p class="consolidation-note">✓ Consolidates 4 systems into one</p>
+				</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	.pricing-study {
+		background: var(--color-bg);
+		color: var(--color-text);
+	}
+
+	/* Hero Section */
+	.hero {
+		padding: 6rem 0 3rem;
+	}
+
+	.hero__content {
+		max-width: 850px;
+	}
+
+	.hero__title {
+		font-family: 'Grenze Gotisch', var(--font-display);
+		font-size: clamp(3rem, 6vw, 4rem);
+		color: #FBFF00;
+		font-weight: 300;
+		line-height: 1.1;
+		margin: 0 0 1.5rem;
+	}
+
+	.hero__subtitle {
+		font-size: 1.25rem;
+		line-height: 1.6;
+		color: #F3EAD0;
+		margin: 0;
+	}
+
+	/* Meta Info */
+	.meta {
+		padding: 2rem 0 3rem;
+	}
+
+	.meta__divider {
+		height: 1px;
+		background: #5f4c22;
+		margin-bottom: 2.5rem;
+	}
+
+	.meta__info {
+		display: flex;
+		gap: 3rem;
+		align-items: flex-start;
+	}
+
+	.meta__item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.meta__item--wide {
+		flex: 1;
+		max-width: 635px;
+	}
+
+	.meta__label {
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #888;
+		margin: 0;
+	}
+
+	.meta__value {
+		font-size: 1rem;
+		color: #FAF6EB;
+		margin: 0;
+	}
+
+	.meta__pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.meta__pill {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.625rem 1.25rem;
+		border: 1px solid #a8893d;
+		border-radius: 3px;
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #c4a44e;
+	}
+
+	/* Sections */
+	.section {
+		padding: 3rem 0;
+	}
+
+	.section__header {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-end;
+		margin-bottom: 1.5rem;
+	}
+
+	.section__number {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 1.25rem;
+		font-weight: 300;
+		color: #a8893d;
+	}
+
+	.section__title {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 2.25rem;
+		font-weight: 400;
+		color: #d0b65f;
+		margin: 0;
+		line-height: 1;
+	}
+
+	.section__intro {
+		font-size: 1rem;
+		line-height: 2;
+		color: #F3EAD0;
+		margin: 0 0 2.5rem;
+		max-width: 850px;
+	}
+
+	.section__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 7.5rem;
+		align-items: center;
+	}
+
+	.section__grid--role {
+		gap: 4rem;
+	}
+
+	.section__content {
+		max-width: 545px;
+	}
+
+	.section__content--narrow {
+		max-width: 490px;
+	}
+
+	.section__text {
+		font-size: 1rem;
+		line-height: 2;
+		color: #F3EAD0;
+	}
+
+	.section__text p {
+		margin: 0 0 1.5rem;
+	}
+
+	.section__text p:last-child {
+		margin-bottom: 0;
+	}
+
+	/* Quote Card */
+	.quote-card {
+		background: #262521;
+		border-left: 2px solid #a8893d;
+		padding: 3.75rem 4.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 282px;
+	}
+
+	.quote-card__text {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 2rem;
+		font-weight: 300;
+		line-height: 1.4;
+		color: #FAF6EB;
+		margin: 0;
+	}
+
+	/* Bullet List */
+	.bullet-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+		max-width: 656px;
+	}
+
+	.bullet-list__item {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		min-height: 55px;
+	}
+
+	.bullet-list__arrow {
+		color: #a8893d;
+		font-size: 1.25rem;
+		flex-shrink: 0;
+	}
+
+	.bullet-list__item p {
+		font-size: 1.125rem;
+		font-weight: 300;
+		line-height: 1.67;
+		color: #FAF6EB;
+		margin: 0;
+	}
+
+	/* Divider */
+	.divider {
+		border-bottom: 2px dotted #5f4c22;
+		margin: 3rem 0;
+	}
+
+	/* Approach Grid */
+	.approach-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem;
+		margin-top: 2.5rem;
+	}
+
+	.approach-card {
+		background: rgba(33, 32, 28, 1);
+		backdrop-filter: blur(2px);
+		border-radius: 8px;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.approach-card__number {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 3rem;
+		font-weight: 400;
+		color: #5f4c22;
+		line-height: 1.2;
+	}
+
+	.approach-card__title {
+		font-size: 1.125rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #c4a44e;
+		margin: 0;
+	}
+
+	.approach-card__text {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: #FAF6EB;
+		margin: 0;
+	}
+
+	/* Subsection Title */
+	.subsection-title {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 1.75rem;
+		font-weight: 400;
+		color: #c4a44e;
+		margin: 0 0 2rem;
+	}
+
+	.subsection-title--user-journey {
+		font-size: 1.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	/* Users Grid */
+	.users-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 2rem;
+		margin-top: 2rem;
+	}
+
+	.user-card {
+		background: rgba(33, 32, 28, 1);
+		backdrop-filter: blur(2px);
+		border-radius: 8px;
+		padding: 2.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.user-card__avatar {
+		width: 96px;
+		height: 96px;
+		border-radius: 50%;
+		overflow: hidden;
+		margin-bottom: 0.5rem;
+	}
+
+	.user-card__avatar img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.user-card__role {
+		font-size: 1.125rem;
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #d0b65f;
+		margin: 0;
+		line-height: 1.4;
+	}
+
+	.user-card__description {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: #FAF6EB;
+		margin: 0;
+		flex: 1;
+	}
+
+	.user-card__note {
+		font-size: 1rem;
+		font-style: italic;
+		line-height: 1.56;
+		color: #d0b65f;
+		margin: 0;
+	}
+
+	/* Process Section */
+	.process-section {
+		margin-bottom: 4rem;
+	}
+
+	.process-section--after {
+		margin-top: 3rem;
+	}
+
+	.process-label {
+		font-size: 1.125rem;
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin: 0 0 2rem;
+	}
+
+	.process-label--before {
+		color: #c4a44e;
+	}
+
+	.process-label--pain {
+		color: #b0b0b0;
+		margin: 2rem 0 1.5rem;
+	}
+
+	.process-label--after {
+		color: #c4a44e;
+	}
+
+	/* Flow Diagram */
+	.flow-diagram {
+		position: relative;
+	}
+
+	.flow-row {
+		display: flex;
+		align-items: center;
+		gap: 2.5rem;
+		margin-bottom: 3rem;
+	}
+
+	.flow-row--tight {
+		align-items: center;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+		justify-content: flex-start;
+	}
+
+	.flow-group {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		min-width: 0;
+	}
+
+	.flow-group__label {
+		font-size: 1.125rem;
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #b0b0b0;
+		margin: 0;
+		min-height: 1.5625rem;
+	}
+
+	.flow-cards {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.flow-card {
+		background: rgba(33, 32, 28, 1);
+		backdrop-filter: blur(2px);
+		border: 1px solid #5f4c22;
+		border-radius: 8px;
+		padding: 1.25rem;
+		font-size: 1rem;
+		line-height: 1.875;
+		color: #FAF6EB;
+		text-align: center;
+	}
+
+	.flow-card--single {
+		padding: 1.25rem 1.5rem;
+	}
+
+	.flow-card--sm {
+		padding: 1.5rem 1.25rem;
+		font-size: 1rem;
+		flex: 0 0 auto;
+		width: 220px;
+	}
+
+	.flow-arrow {
+		color: #a8893d;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		margin-top: 2.5625rem;
+	}
+
+	.flow-arrow--sm {
+		margin-top: 0;
+		font-size: 1.25rem;
+		flex-shrink: 0;
+	}
+
+
+	/* Journey Grid */
+	.journey-grid {
+		display: flex;
+		gap: 2rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.journey-card {
+		background: rgba(33, 32, 28, 1);
+		backdrop-filter: blur(2px);
+		border-radius: 8px;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
+	.journey-card--highlight {
+		background: rgba(132, 106, 47, 0.22);
+	}
+
+	.consolidation-note {
+		text-align: center;
+		font-size: 1rem;
+		color: #d0b65f;
+		margin: 0;
+	}
+
+	.journey-card__number {
+		font-family: 'Grenze', var(--font-display);
+		font-size: 3rem;
+		font-weight: 400;
+		color: #888;
+		line-height: 1.2;
+	}
+
+	.journey-card__number--highlight {
+		color: #c4a44e;
+	}
+
+	.journey-card__title {
+		font-size: 1.125rem;
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: #b0b0b0;
+		margin: 0;
+	}
+
+	.journey-card__title--highlight {
+		color: #c4a44e;
+	}
+
+	.journey-card__text {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: #FAF6EB;
+		margin: 0;
+	}
+
+	/* Responsive */
+	@media (max-width: 1400px) {
+		.flow-card--sm {
+			width: 200px;
+			font-size: 0.9375rem;
+			padding: 1.25rem 1rem;
+		}
+
+		.flow-arrow--sm {
+			font-size: 1.125rem;
+		}
+	}
+
+	@media (max-width: 1200px) {
+		.flow-card--sm {
+			width: 170px;
+			font-size: 0.875rem;
+			padding: 1.25rem 0.875rem;
+		}
+
+		.flow-row--tight {
+			gap: 1.25rem;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.section__grid {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.quote-card {
+			padding: 2.5rem;
+		}
+
+		.users-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.journey-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		.approach-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.flow-card--sm {
+			width: 150px;
+			font-size: 0.8125rem;
+			padding: 1rem 0.75rem;
+		}
+
+		.flow-row--tight {
+			gap: 1rem;
+		}
+
+		.flow-arrow--sm {
+			font-size: 1rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero {
+			padding: 4rem 0 2rem;
+		}
+
+		.hero__title {
+			font-size: 2.5rem;
+		}
+
+		.meta__info {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.section {
+			padding: 2rem 0;
+		}
+
+		.users-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.journey-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.flow-row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 1rem;
+		}
+
+		.flow-row--tight {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.flow-group {
+			width: 100%;
+		}
+
+		.flow-card {
+			width: 100%;
+		}
+
+		.flow-card--sm {
+			width: 100%;
+			flex: 1 1 auto;
+		}
+
+		.flow-arrow {
+			align-self: center;
+			transform: rotate(90deg);
+			margin: 0;
+		}
+
+		.flow-arrow--sm {
+			align-self: center;
+			transform: rotate(90deg);
+			margin: 0;
+		}
+
+		.process-label--pain {
+			margin: 1.5rem 0 1rem;
+		}
+	}
+</style>
+
