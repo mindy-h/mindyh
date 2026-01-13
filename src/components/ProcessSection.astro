@@ -58,14 +58,15 @@ import clarity from '../assets/clarity.png';
 						<div class="tool-icon">
 							<img src={figma.src} alt="Figma" />
 						</div>
-						<div class="tool-icon tool-icon--clarity">
-							<img src={clarity.src} alt="Clarity" />
-						</div>
+						
 						<div class="tool-icon">
 							<img src={cursor.src} alt="Cursor" />
 						</div>
 						<div class="tool-icon">
 							<img src={claude.src} alt="Claude" />
+						</div>
+						<div class="tool-icon tool-icon--clarity">
+							<img src={clarity.src} alt="Clarity" />
 						</div>
 						<div class="tool-icon">
 							<img src={ps.src} alt="Photoshop" />
@@ -84,7 +85,7 @@ import clarity from '../assets/clarity.png';
 	.process {
 		position: relative;
 		padding: 6rem 0 5rem;
-		background: linear-gradient(180deg, rgba(26, 23, 18, 0) 0%, #0a0907 100%);
+		background: none;
 	}
 
 	.process__container {
@@ -123,10 +124,7 @@ import clarity from '../assets/clarity.png';
 		transition: all 0.3s ease;
 	}
 
-	.process__card:hover {
-		transform: translateY(-4px) !important;
-		background: rgba(33, 32, 28, 0.95);
-	}
+
 
 	.process__icon {
 		height: 67px;
@@ -170,6 +168,8 @@ import clarity from '../assets/clarity.png';
 	.process__quote {
 		position: sticky;
 		top: 6rem;
+		background: transparent;
+		box-shadow: none;
 	}
 
 	.process__quote p {
@@ -188,7 +188,7 @@ import clarity from '../assets/clarity.png';
 	}
 
 	.process__philosophy {
-		font-size: 1.25rem;
+		font-size: 1rem;
 		line-height: 1.75;
 		color: #F3EAD0;
 		margin: 0;
@@ -226,9 +226,7 @@ import clarity from '../assets/clarity.png';
 		transition: transform 0.2s ease;
 	}
 
-	.tool-icon:hover {
-		transform: translateY(-2px);
-	}
+
 
 
 	.tool-icon img {
@@ -291,4 +289,3 @@ import clarity from '../assets/clarity.png';
 		}
 	}
 </style>
-

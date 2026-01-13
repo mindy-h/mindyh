@@ -51,6 +51,16 @@ import portrait from '../assets/portrait.png';
 		transition: transform 0.2s ease-out;
 	}
 
+	.hero__bg canvas.hero__bg-canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		mix-blend-mode: screen;
+		opacity: 0.38;
+	}
+
 	.hero__bg svg {
 		width: 100%;
 		height: 100%;
@@ -182,10 +192,20 @@ import portrait from '../assets/portrait.png';
 	let svgEl: SVGSVGElement | null = null;
 	let paths: SVGGraphicsElement[] = [];
 	let frame: number | null = null;
+	let particleFrame: number | null = null;
 	let targetX = 0;
 	let targetY = 0;
 	let currentX = 0;
 	let currentY = 0;
+	let liquifyTarget = 0;
+	let liquifyCurrent = 0;
+	let particleMouseX = 0;
+	let particleMouseY = 0;
+	let particleCanvas: HTMLCanvasElement | null = null;
+	let particleCtx: CanvasRenderingContext2D | null = null;
+	let particles: { x: number; y: number; vx: number; vy: number; size: number; life: number; decay: number; hue: number; alpha: number }[] = [];
+	let feTurbulence: SVGFETurbulenceElement | null = null;
+	let feDisplacement: SVGFEDisplacementMapElement | null = null;
 
 	const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
 
@@ -201,6 +221,144 @@ import portrait from '../assets/portrait.png';
 			p.style.transformOrigin = 'center';
 		});
 		svgEl.style.transform = `rotate(calc(2deg + ${currentX * 0.4}deg)) translate(${currentX * 0.25}%, ${currentY * 0.25}%)`;
+
+		// Liquify filter intensity update
+		liquifyCurrent = lerp(liquifyCurrent, liquifyTarget, 0.04);
+		if (feTurbulence) {
+			const base = 0.0045;
+			const range = 0.009;
+			feTurbulence.setAttribute('baseFrequency', `${base + range * liquifyCurrent}`);
+		}
+		if (feDisplacement) {
+			const minScale = 0;
+			const maxScale = 12;
+			feDisplacement.setAttribute('scale', `${minScale + (maxScale - minScale) * liquifyCurrent}`);
+		}
+	};
+
+	const initParticles = () => {
+		if (!host) return;
+		particleCanvas = document.createElement('canvas');
+		particleCanvas.className = 'hero__bg-canvas';
+		particleCtx = particleCanvas.getContext('2d');
+		host.appendChild(particleCanvas);
+		const resize = () => {
+			if (!particleCanvas) return;
+			particleCanvas.width = host.clientWidth;
+			particleCanvas.height = host.clientHeight;
+		};
+		resize();
+		window.addEventListener('resize', resize);
+
+		// Seed particles
+		const count = 140;
+		particles = Array.from({ length: count }).map(() => ({
+			x: Math.random() * (particleCanvas?.width || 1),
+			y: Math.random() * (particleCanvas?.height || 1),
+			vx: (Math.random() - 0.5) * 0.3,
+			vy: (Math.random() - 0.5) * 0.3,
+			size: Math.random() * 1.8 + 0.4,
+			life: Math.random(),
+			decay: Math.random() * 0.004 + 0.001,
+			hue: 45 + Math.random() * 25,
+			alpha: 0.25 + Math.random() * 0.35,
+		}));
+
+		const step = () => {
+			const ctx = particleCtx;
+			const canvas = particleCanvas;
+			if (!ctx || !canvas) return;
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			particles.forEach((p) => {
+				const dx = p.x - particleMouseX;
+				const dy = p.y - particleMouseY;
+				const dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 140) {
+					const force = (1 - dist / 140) * 0.4;
+					const angle = Math.atan2(dy, dx);
+					p.vx += Math.cos(angle) * force * -1;
+					p.vy += Math.sin(angle) * force * -1;
+				}
+
+				p.x += p.vx + Math.sin(Date.now() * 0.001 + p.y * 0.01) * 0.15;
+				p.y += p.vy + Math.cos(Date.now() * 0.001 + p.x * 0.01) * 0.1;
+				p.vx *= 0.98;
+				p.vy *= 0.98;
+				p.life -= p.decay;
+
+				if (p.life <= 0 || p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+					p.x = Math.random() * canvas.width;
+					p.y = Math.random() * canvas.height;
+					p.vx = (Math.random() - 0.5) * 0.2;
+					p.vy = (Math.random() - 0.5) * 0.2;
+					p.life = 1;
+				}
+
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 50%, 65%, ${p.alpha * p.life})`;
+				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 60%, 75%, ${p.alpha * 0.25 * p.life})`;
+				ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
+				ctx.fill();
+			});
+			particleFrame = requestAnimationFrame(step);
+		};
+
+		particleFrame = requestAnimationFrame(step);
+
+		if (window.matchMedia('(hover: hover)').matches) {
+			host.addEventListener('mousemove', (e) => {
+				const rect = host.getBoundingClientRect();
+				particleMouseX = e.clientX - rect.left;
+				particleMouseY = e.clientY - rect.top;
+			}, { passive: true });
+			host.addEventListener('mouseleave', () => {
+				particleMouseX = (host?.clientWidth || 0) / 2;
+				particleMouseY = (host?.clientHeight || 0) / 2;
+				liquifyTarget = 0;
+				if (!frame) tick();
+			});
+		}
+	};
+
+	const injectLiquifyFilter = (doc: Document, svg: SVGSVGElement) => {
+		const ns = 'http://www.w3.org/2000/svg';
+		let defs = svg.querySelector('defs');
+		if (!defs) {
+			defs = doc.createElementNS(ns, 'defs');
+			svg.insertBefore(defs, svg.firstChild);
+		}
+
+		const filter = doc.createElementNS(ns, 'filter');
+		filter.id = 'hero-liquify-filter';
+		filter.setAttribute('filterUnits', 'objectBoundingBox');
+		filter.setAttribute('x', '0%');
+		filter.setAttribute('y', '0%');
+		filter.setAttribute('width', '100%');
+		filter.setAttribute('height', '100%');
+
+		feTurbulence = doc.createElementNS(ns, 'feTurbulence');
+		feTurbulence.setAttribute('type', 'fractalNoise');
+		feTurbulence.setAttribute('baseFrequency', '0.014');
+		feTurbulence.setAttribute('numOctaves', '2');
+		feTurbulence.setAttribute('seed', '2');
+		feTurbulence.setAttribute('result', 'noise');
+
+		feDisplacement = doc.createElementNS(ns, 'feDisplacementMap');
+		feDisplacement.setAttribute('in', 'SourceGraphic');
+		feDisplacement.setAttribute('in2', 'noise');
+		feDisplacement.setAttribute('scale', '8');
+		feDisplacement.setAttribute('xChannelSelector', 'R');
+		feDisplacement.setAttribute('yChannelSelector', 'G');
+
+		filter.appendChild(feTurbulence);
+		filter.appendChild(feDisplacement);
+		defs.appendChild(filter);
+		svg.style.filter = 'url(#hero-liquify-filter)';
 	};
 
 	const tick = () => {
@@ -215,11 +373,22 @@ import portrait from '../assets/portrait.png';
 	};
 
 	const handleMove = (e: MouseEvent) => {
+		const rect = host?.getBoundingClientRect();
 		const { innerWidth, innerHeight } = window;
 		const x = e.clientX / innerWidth - 0.5;
 		const y = e.clientY / innerHeight - 0.5;
 		targetX = x * 3;
 		targetY = y * 3;
+
+		if (rect) {
+			const localX = (e.clientX - rect.left) / rect.width - 0.5;
+			const localY = (e.clientY - rect.top) / rect.height - 0.5;
+			const dist = Math.sqrt(localX * localX + localY * localY);
+			const magnitude = Math.max(0, 1 - dist * 1.8);
+			liquifyTarget = magnitude * 0.35;
+		} else {
+			liquifyTarget = 0.2;
+		}
 		if (!frame) tick();
 	};
 
@@ -234,6 +403,7 @@ import portrait from '../assets/portrait.png';
 			svgEl = doc.querySelector('svg');
 			if (!svgEl) return;
 			paths = Array.from(svgEl.querySelectorAll<SVGGraphicsElement>('path, g'));
+			injectLiquifyFilter(doc, svgEl);
 			// Clean up attributes that may conflict with transforms
 			paths.forEach((p) => {
 				p.style.willChange = 'transform';
@@ -244,6 +414,7 @@ import portrait from '../assets/portrait.png';
 			if (window.matchMedia('(hover: hover)').matches) {
 				window.addEventListener('mousemove', handleMove, { passive: true });
 			}
+			initParticles();
 		} catch (err) {
 			console.error('Failed to load SVG for hero background', err);
 		}

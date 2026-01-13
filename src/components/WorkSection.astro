@@ -1,5 +1,5 @@
 ---
-import skylens from '../assets/skylens_img.png';
+import skylens from '../assets/wea.png';
 import pricing from '../assets/pricing_img.png';
 import phorm from '../assets/phorm.png';
 ---
@@ -23,6 +23,22 @@ import phorm from '../assets/phorm.png';
 				</div>
 			</a>
 
+
+
+
+			<a href="/pricing" class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
+				<div class="work__image">
+					<img src={pricing.src} alt="Everyday Pricing" loading="lazy" />
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">business process</p>
+					<h3 class="work__heading">Everyday Pricing</h3>
+					<p class="work__text">
+						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
+					</p>
+					<span class="work__link">click for details</span>
+				</div>
+			</a>
 			<a href="/pricing" class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
 				<div class="work__image">
 					<img src={pricing.src} alt="Everyday Pricing" loading="lazy" />
@@ -68,7 +84,7 @@ import phorm from '../assets/phorm.png';
 
 	.work__grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1.5rem;
 	}
 
