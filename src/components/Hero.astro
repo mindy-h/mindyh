@@ -206,6 +206,8 @@ import portrait from '../assets/portrait.png';
 	let particles: { x: number; y: number; vx: number; vy: number; size: number; life: number; decay: number; hue: number; alpha: number }[] = [];
 	let feTurbulence: SVGFETurbulenceElement | null = null;
 	let feDisplacement: SVGFEDisplacementMapElement | null = null;
+	let particlesStarted = false;
+	let particlesObserver: IntersectionObserver | null = null;
 
 	const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
 
@@ -325,6 +327,12 @@ import portrait from '../assets/portrait.png';
 		}
 	};
 
+	const startParticlesIfNeeded = () => {
+		if (particlesStarted) return;
+		particlesStarted = true;
+		initParticles();
+	};
+
 	const injectLiquifyFilter = (doc: Document, svg: SVGSVGElement) => {
 		const ns = 'http://www.w3.org/2000/svg';
 		let defs = svg.querySelector('defs');
@@ -413,8 +421,25 @@ import portrait from '../assets/portrait.png';
 			host.appendChild(svgEl);
 			if (window.matchMedia('(hover: hover)').matches) {
 				window.addEventListener('mousemove', handleMove, { passive: true });
+				host.addEventListener('pointerenter', startParticlesIfNeeded, { passive: true });
 			}
-			initParticles();
+			if ('IntersectionObserver' in window) {
+				particlesObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								startParticlesIfNeeded();
+								particlesObserver?.disconnect();
+							}
+						});
+					},
+					{ threshold: 0.15 }
+				);
+				particlesObserver.observe(host);
+			} else {
+				// Fallback: start immediately
+				startParticlesIfNeeded();
+			}
 		} catch (err) {
 			console.error('Failed to load SVG for hero background', err);
 		}
