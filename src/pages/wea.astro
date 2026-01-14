@@ -2,11 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
-// TODO: Add your persona images
-// import cdrtm from '../assets/cdrtm.png';
-// import fieldrep from '../assets/fieldrep.png';
-// import eam from '../assets/eam.png';
-// import wholesaler from '../assets/wholesaler.png';
+import portrait1 from '../assets/persona1.png';
+import portrait2 from '../assets/portrait1.png';
+import portrait3 from '../assets/portrait3.png';
+import portrait4 from '../assets/portrait4.png';
+
+// Assign portraits to user cards in fixed order
+const portraits = [portrait1, portrait2, portrait3, portrait4];
 ---
 
 <Layout title="WEA Assessment Portal - Mindy House">
@@ -190,8 +192,8 @@ import Footer from '../components/Footer.astro';
 				
 				<div class="users-grid">
 					<div class="user-card">
-						<div class="user-card__avatar user-card__avatar--placeholder">
-							<!-- TODO: Add image: <img src={cdrtm.src} alt="CD / RTM Team" /> -->
+						<div class="user-card__avatar">
+							<img src={portraits[0].src} alt="CD / RTM Team" />
 						</div>
 						<h4 class="user-card__role">CD / RTM Team</h4>
 						<p class="user-card__description">
@@ -203,8 +205,8 @@ import Footer from '../components/Footer.astro';
 					</div>
 
 					<div class="user-card">
-						<div class="user-card__avatar user-card__avatar--placeholder">
-							<!-- TODO: Add image: <img src={fieldrep.src} alt="Field Representative" /> -->
+						<div class="user-card__avatar">
+							<img src={portraits[1].src} alt="Field Representative" />
 						</div>
 						<h4 class="user-card__role">Field Representative</h4>
 						<p class="user-card__description">
@@ -216,8 +218,8 @@ import Footer from '../components/Footer.astro';
 					</div>
 
 					<div class="user-card">
-						<div class="user-card__avatar user-card__avatar--placeholder">
-							<!-- TODO: Add image: <img src={eam.src} alt="EAM Reviewer" /> -->
+						<div class="user-card__avatar">
+							<img src={portraits[2].src} alt="EAM Reviewer" />
 						</div>
 						<h4 class="user-card__role">EAM Reviewer</h4>
 						<p class="user-card__description">
@@ -229,8 +231,8 @@ import Footer from '../components/Footer.astro';
 					</div>
 
 					<div class="user-card">
-						<div class="user-card__avatar user-card__avatar--placeholder">
-							<!-- TODO: Add image: <img src={wholesaler.src} alt="Wholesaler Partner" /> -->
+						<div class="user-card__avatar">
+							<img src={portraits[3].src} alt="Wholesaler Partner" />
 						</div>
 						<h4 class="user-card__role">Wholesaler Partner</h4>
 						<p class="user-card__description">
