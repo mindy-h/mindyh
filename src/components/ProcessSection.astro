@@ -10,7 +10,8 @@ import ai from '../assets/ai.svg';
 import clarity from '../assets/clarity.png';
 ---
 
-<section id="process" class="process">
+<section id="process" class="process" data-process>
+	<canvas class="process__particles" aria-hidden="true"></canvas>
 	<div class="container process__container">
 		<h2 class="process__title fade-in">How I work</h2>
 		
@@ -44,7 +45,7 @@ import clarity from '../assets/clarity.png';
 		<!-- Quote and context section -->
 		<div class="process__content">
 			<div class="process__quote fade-in">
-				<p>I believe the best <span class="highlight">design</span> work happens when we have a seat at the <span class="highlight">strategy</span> table.</p>
+				<p>I believe the best design work happens when we have a seat at the strategy table.</p>
 			</div>
 			
 			<div class="process__context fade-in">
@@ -86,6 +87,18 @@ import clarity from '../assets/clarity.png';
 		position: relative;
 		padding: 6rem 0 5rem;
 		background: none;
+		overflow: hidden;
+	}
+
+	.process__particles {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		pointer-events: none;
+		opacity: 0.5;
 	}
 
 	.process__container {
@@ -295,3 +308,108 @@ import clarity from '../assets/clarity.png';
 		}
 	}
 </style>
+
+<script>
+	const process = document.querySelector('[data-process]') as HTMLElement | null;
+	const canvas = document.querySelector('.process__particles') as HTMLCanvasElement | null;
+	
+	// Particle animation
+	if (canvas && process) {
+		const ctx = canvas.getContext('2d');
+		let particles: { x: number; y: number; vx: number; vy: number; size: number; life: number; decay: number; hue: number; alpha: number }[] = [];
+		let mouseX = 0;
+		let mouseY = 0;
+		let animationId: number | null = null;
+
+		const resize = () => {
+			canvas.width = process.clientWidth;
+			canvas.height = process.clientHeight;
+		};
+
+		const initParticles = () => {
+			const count = 80;
+			particles = Array.from({ length: count }).map(() => ({
+				x: Math.random() * canvas.width,
+				y: Math.random() * canvas.height,
+				vx: (Math.random() - 0.5) * 0.3,
+				vy: (Math.random() - 0.5) * 0.3,
+				size: Math.random() * 2 + 0.5,
+				life: Math.random(),
+				decay: Math.random() * 0.003 + 0.001,
+				hue: 40 + Math.random() * 20,
+				alpha: 0.2 + Math.random() * 0.3,
+			}));
+		};
+
+		const animate = () => {
+			if (!ctx) return;
+			
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			particles.forEach((p) => {
+				// Mouse interaction
+				const dx = p.x - mouseX;
+				const dy = p.y - mouseY;
+				const dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 120) {
+					const force = (1 - dist / 120) * 0.3;
+					const angle = Math.atan2(dy, dx);
+					p.vx += Math.cos(angle) * force * -1;
+					p.vy += Math.sin(angle) * force * -1;
+				}
+
+				// Gentle floating motion
+				p.x += p.vx + Math.sin(Date.now() * 0.0008 + p.y * 0.01) * 0.1;
+				p.y += p.vy + Math.cos(Date.now() * 0.0008 + p.x * 0.01) * 0.08;
+				p.vx *= 0.99;
+				p.vy *= 0.99;
+				p.life -= p.decay;
+
+				// Reset particle if dead or out of bounds
+				if (p.life <= 0 || p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+					p.x = Math.random() * canvas.width;
+					p.y = Math.random() * canvas.height;
+					p.vx = (Math.random() - 0.5) * 0.2;
+					p.vy = (Math.random() - 0.5) * 0.2;
+					p.life = 1;
+				}
+
+				// Draw particle
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 45%, 55%, ${p.alpha * p.life})`;
+				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Draw glow
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 50%, 65%, ${p.alpha * 0.2 * p.life})`;
+				ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+				ctx.fill();
+			});
+
+			animationId = requestAnimationFrame(animate);
+		};
+
+		resize();
+		initParticles();
+		animate();
+
+		window.addEventListener('resize', () => {
+			resize();
+			initParticles();
+		});
+
+		if (window.matchMedia('(hover: hover)').matches) {
+			process.addEventListener('mousemove', (e) => {
+				const rect = process.getBoundingClientRect();
+				mouseX = e.clientX - rect.left;
+				mouseY = e.clientY - rect.top;
+			}, { passive: true });
+
+			process.addEventListener('mouseleave', () => {
+				mouseX = canvas.width / 2;
+				mouseY = canvas.height / 2;
+			});
+		}
+	}
+</script>
