@@ -2,6 +2,7 @@
 import skylens from '../assets/wea.png';
 import pricing from '../assets/pricing_img.png';
 import phorm from '../assets/phorm.png';
+import arrowRight from '../assets/arrow_right.svg';
 ---
 
 <section id="work" class="work">
@@ -15,11 +16,11 @@ import phorm from '../assets/phorm.png';
 				</div>
 				<div class="work__body">
 					<p class="work__eyebrow">business process</p>
-					<h3 class="work__heading">Wholesaler Equity Agreement (WEA) AssessmentPortal</h3>
+					<h3 class="work__heading">WEA Assessment Portal</h3>
 					<p class="work__text">
 						Unified a fragmented compliance workflow for 500+ wholesaler partners into a single mobile-first portal.
 					</p>
-					<span class="work__link">click for details</span>
+					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" /></span>
 				</div>
 			</a>
 
@@ -36,7 +37,7 @@ import phorm from '../assets/phorm.png';
 					<p class="work__text">
 						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
 					</p>
-					<span class="work__link">click for details</span>
+					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" /></span>
 				</div>
 			</a>
 		</div>
@@ -86,14 +87,29 @@ import phorm from '../assets/phorm.png';
 		min-height: 100%;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 		text-decoration: none;
-		transition: transform 0.3s ease, box-shadow 0.3s ease;
 		cursor: pointer;
 		color: inherit;
+		/* Initial state - below and faded */
+		opacity: 0;
+		transform: translateY(60px);
+		transition: 
+			opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+			box-shadow 0.3s ease;
 	}
 
-	.work__card:hover {
-		transform: translateY(-8px) !important;
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+	.work__card:nth-child(2) {
+		transition-delay: 0.15s;
+	}
+
+	.work__card.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.work__card.is-visible:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 	}
 
 	.work__image {
@@ -110,10 +126,12 @@ import phorm from '../assets/phorm.png';
 	}
 
 	.work__body {
-		padding: 1.25rem 1.5rem 1.5rem;
+		padding: 1.25rem 1.5rem 4rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.4rem;
+		flex: 1;
+		position: relative;
 	}
 
 	.work__eyebrow {
@@ -139,28 +157,68 @@ import phorm from '../assets/phorm.png';
 	}
 
 	.work__link {
-		margin-top: auto;
-		color: var(--color-accent);
-		text-transform: uppercase;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		font-size: 0.85rem;
-		align-self: flex-start;
-		display: inline-block;
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.work__arrow {
+		width: 48px;
+		height: 48px;
+		transition: transform 0.3s ease;
+	}
+
+	.work__card:hover .work__arrow {
+		transform: translateX(4px);
 	}
 
 
 	@media (max-width: 640px) {
 		.work {
-			padding: 2.5rem 0 3rem;
+			padding: 1.5rem 0 3rem;
 		}
 		.work__grid {
 			grid-template-columns: 1fr;
 		}
 		.work__title {
 			margin-bottom: 1.5rem;
-			margin-top: 1.5rem;
+			margin-top: 0;
+		}
+		.work__card:nth-child(2) {
+			transition-delay: 0s;
+		}
+	}
+
+	/* Reduce motion for accessibility */
+	@media (prefers-reduced-motion: reduce) {
+		.work__card {
+			opacity: 1;
+			transform: none;
+			transition: box-shadow 0.3s ease;
 		}
 	}
 </style>
 
+<script>
+	const cards = document.querySelectorAll('.work__card');
+	
+	if (cards.length) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+					}
+				});
+			},
+			{ 
+				threshold: 0.15,
+				rootMargin: '0px 0px -50px 0px'
+			}
+		);
+		
+		cards.forEach((card) => observer.observe(card));
+	}
+</script>

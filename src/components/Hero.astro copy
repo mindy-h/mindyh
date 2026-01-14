@@ -1,0 +1,493 @@
+---
+import Button from './Button.astro';
+import heroBg from '../assets/hero_bg.svg';
+import portrait from '../assets/portrait.png';
+---
+
+<section class="hero">
+	<div class="hero__bg" aria-hidden="true" data-hero-bg data-hero-src={heroBg.src}></div>
+	
+	<div class="container hero__container">
+		<div class="hero__content">
+			<h1 class="hero__title">
+				Designer. Listener.<br />
+				Process builder.
+			</h1>
+			<p class="hero__text">
+				I'm Mindy. Product and visual designer with 10+ years in enterprise and e-commerce, 
+				currently at Anheuser-Busch.
+			</p>
+			<Button href="#about">about me</Button>
+		</div>
+
+		<div class="hero__portrait" data-parallax-portrait>
+			<div class="hero__portrait-frame">
+				<img src={portrait.src} alt="Mindy House portrait" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		display: flex;
+		align-items: center;
+		overflow: visible;
+		padding-block: 0.75rem 2rem;
+		min-height: 100vh;
+	}
+
+	.hero__bg {
+		position: absolute;
+		top: -12%;
+		left: -10%;
+		width: 120%;
+		height: 120%;
+		z-index: 0;
+		opacity: 0.6;
+		transform: rotate(2deg);
+		pointer-events: none;
+		transition: transform 0.2s ease-out;
+	}
+
+	.hero__bg canvas.hero__bg-canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		mix-blend-mode: screen;
+		opacity: 0.38;
+	}
+
+	.hero__bg svg {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.hero__container {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+
+	.hero__content {
+		max-width: 690px;
+	}
+
+	.hero__title {
+		font-family: var(--font-display);
+		font-size: clamp(2.5rem, 6vw, 96px);
+		font-weight: 300;
+		color: var(--color-accent);
+		margin-bottom: 1.5rem;
+		line-height: 1;
+		text-transform: capitalize;
+	}
+
+	.hero__text {
+		font-size: 1.125rem;
+		line-height: 1.6;
+		margin-bottom: 2rem;
+		max-width: 640px;
+	}
+
+	.hero__portrait {
+		position: relative;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		--portrait-shift: 8rem;
+		transform: translateY(var(--portrait-shift));
+		z-index: 10;
+	}
+
+	.hero__portrait-frame {
+		position: relative;
+		width: 85%;
+		max-width: 700px;
+		overflow: visible;
+	}
+
+	.hero__portrait-frame img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	@media (hover: none) and (pointer: coarse) {
+		.hero__bg {
+			transform: rotate(2deg);
+		}
+	}
+
+	/* Responsive */
+	@media (max-width: 1024px) {
+		.hero {
+			padding-block: 5rem 2rem;
+		}
+
+		.hero__container {
+			grid-template-columns: 1fr;
+			gap: 3rem;
+		}
+
+		.hero__portrait {
+			--portrait-shift: 4rem;
+		}
+
+		.hero__portrait-frame {
+			max-width: 500px;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero {
+			padding-block: 4rem 5rem;
+			min-height: 100vh;
+		}
+
+		.hero__container {
+			gap: 3rem;
+		}
+
+		.hero__bg {
+			width: 200%;
+			height: 100%;
+			transform: rotate(0deg);
+			opacity: 0.6;
+		}
+
+		.hero__title {
+			font-size: clamp(2rem, 12vw, 3rem);
+			margin-bottom: 1rem;
+			margin-top: 1.5rem;
+		}
+
+		.hero__text {
+			font-size: 1rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.hero__portrait {
+			--portrait-shift: -2rem;
+			justify-content: center;
+		}
+
+		.hero__portrait-frame {
+			width: 100%;
+		}
+	}
+</style>
+
+<script>
+	const host = document.querySelector('[data-hero-bg]') as HTMLElement | null;
+	let svgEl: SVGSVGElement | null = null;
+	let paths: SVGGraphicsElement[] = [];
+	let frame: number | null = null;
+	let particleFrame: number | null = null;
+	let targetX = 0;
+	let targetY = 0;
+	let currentX = 0;
+	let currentY = 0;
+	let liquifyTarget = 0;
+	let liquifyCurrent = 0;
+	let particleMouseX = 0;
+	let particleMouseY = 0;
+	let particleCanvas: HTMLCanvasElement | null = null;
+	let particleCtx: CanvasRenderingContext2D | null = null;
+	let particles: { x: number; y: number; vx: number; vy: number; size: number; life: number; decay: number; hue: number; alpha: number }[] = [];
+	let feTurbulence: SVGFETurbulenceElement | null = null;
+	let feDisplacement: SVGFEDisplacementMapElement | null = null;
+	let particlesStarted = false;
+	let particlesObserver: IntersectionObserver | null = null;
+
+	const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
+
+	const applyTransforms = () => {
+		if (!svgEl) return;
+		const depth = 6;
+		paths.forEach((p, idx) => {
+			const layer = (idx % depth) + 1;
+			const dx = (currentX * 0.1 * layer).toFixed(3);
+			const dy = (currentY * 0.1 * layer).toFixed(3);
+			p.style.transform = `translate(${dx}%, ${dy}%)`;
+			p.style.transformBox = 'fill-box';
+			p.style.transformOrigin = 'center';
+		});
+		svgEl.style.transform = `rotate(calc(2deg + ${currentX * 0.4}deg)) translate(${currentX * 0.25}%, ${currentY * 0.25}%)`;
+
+		// Liquify filter intensity update
+		liquifyCurrent = lerp(liquifyCurrent, liquifyTarget, 0.04);
+		if (feTurbulence) {
+			const base = 0.0045;
+			const range = 0.009;
+			feTurbulence.setAttribute('baseFrequency', `${base + range * liquifyCurrent}`);
+		}
+		if (feDisplacement) {
+			const minScale = 0;
+			const maxScale = 12;
+			feDisplacement.setAttribute('scale', `${minScale + (maxScale - minScale) * liquifyCurrent}`);
+		}
+	};
+
+	const initParticles = () => {
+		if (!host) return;
+		particleCanvas = document.createElement('canvas');
+		particleCanvas.className = 'hero__bg-canvas';
+		particleCtx = particleCanvas.getContext('2d');
+		host.appendChild(particleCanvas);
+		const resize = () => {
+			if (!particleCanvas) return;
+			particleCanvas.width = host.clientWidth;
+			particleCanvas.height = host.clientHeight;
+		};
+		resize();
+		window.addEventListener('resize', resize);
+
+		// Seed particles
+		const count = 140;
+		particles = Array.from({ length: count }).map(() => ({
+			x: Math.random() * (particleCanvas?.width || 1),
+			y: Math.random() * (particleCanvas?.height || 1),
+			vx: (Math.random() - 0.5) * 0.3,
+			vy: (Math.random() - 0.5) * 0.3,
+			size: Math.random() * 1.8 + 0.4,
+			life: Math.random(),
+			decay: Math.random() * 0.004 + 0.001,
+			hue: 45 + Math.random() * 25,
+			alpha: 0.25 + Math.random() * 0.35,
+		}));
+
+		const step = () => {
+			const ctx = particleCtx;
+			const canvas = particleCanvas;
+			if (!ctx || !canvas) return;
+
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			particles.forEach((p) => {
+				const dx = p.x - particleMouseX;
+				const dy = p.y - particleMouseY;
+				const dist = Math.sqrt(dx * dx + dy * dy);
+				if (dist < 140) {
+					const force = (1 - dist / 140) * 0.4;
+					const angle = Math.atan2(dy, dx);
+					p.vx += Math.cos(angle) * force * -1;
+					p.vy += Math.sin(angle) * force * -1;
+				}
+
+				p.x += p.vx + Math.sin(Date.now() * 0.001 + p.y * 0.01) * 0.15;
+				p.y += p.vy + Math.cos(Date.now() * 0.001 + p.x * 0.01) * 0.1;
+				p.vx *= 0.98;
+				p.vy *= 0.98;
+				p.life -= p.decay;
+
+				if (p.life <= 0 || p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+					p.x = Math.random() * canvas.width;
+					p.y = Math.random() * canvas.height;
+					p.vx = (Math.random() - 0.5) * 0.2;
+					p.vy = (Math.random() - 0.5) * 0.2;
+					p.life = 1;
+				}
+
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 50%, 65%, ${p.alpha * p.life})`;
+				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+				ctx.fill();
+
+				ctx.beginPath();
+				ctx.fillStyle = `hsla(${p.hue}, 60%, 75%, ${p.alpha * 0.25 * p.life})`;
+				ctx.arc(p.x, p.y, p.size * 2.2, 0, Math.PI * 2);
+				ctx.fill();
+			});
+			particleFrame = requestAnimationFrame(step);
+		};
+
+		particleFrame = requestAnimationFrame(step);
+
+		if (window.matchMedia('(hover: hover)').matches) {
+			host.addEventListener('mousemove', (e) => {
+				const rect = host.getBoundingClientRect();
+				particleMouseX = e.clientX - rect.left;
+				particleMouseY = e.clientY - rect.top;
+			}, { passive: true });
+			host.addEventListener('mouseleave', () => {
+				particleMouseX = (host?.clientWidth || 0) / 2;
+				particleMouseY = (host?.clientHeight || 0) / 2;
+				liquifyTarget = 0;
+				if (!frame) tick();
+			});
+		}
+	};
+
+	const startParticlesIfNeeded = () => {
+		if (particlesStarted) return;
+		particlesStarted = true;
+		initParticles();
+	};
+
+	const injectLiquifyFilter = (doc: Document, svg: SVGSVGElement) => {
+		const ns = 'http://www.w3.org/2000/svg';
+		let defs = svg.querySelector('defs');
+		if (!defs) {
+			defs = doc.createElementNS(ns, 'defs');
+			svg.insertBefore(defs, svg.firstChild);
+		}
+
+		const filter = doc.createElementNS(ns, 'filter');
+		filter.id = 'hero-liquify-filter';
+		filter.setAttribute('filterUnits', 'objectBoundingBox');
+		filter.setAttribute('x', '0%');
+		filter.setAttribute('y', '0%');
+		filter.setAttribute('width', '100%');
+		filter.setAttribute('height', '100%');
+
+		feTurbulence = doc.createElementNS(ns, 'feTurbulence');
+		feTurbulence.setAttribute('type', 'fractalNoise');
+		feTurbulence.setAttribute('baseFrequency', '0.014');
+		feTurbulence.setAttribute('numOctaves', '2');
+		feTurbulence.setAttribute('seed', '2');
+		feTurbulence.setAttribute('result', 'noise');
+
+		feDisplacement = doc.createElementNS(ns, 'feDisplacementMap');
+		feDisplacement.setAttribute('in', 'SourceGraphic');
+		feDisplacement.setAttribute('in2', 'noise');
+		feDisplacement.setAttribute('scale', '8');
+		feDisplacement.setAttribute('xChannelSelector', 'R');
+		feDisplacement.setAttribute('yChannelSelector', 'G');
+
+		filter.appendChild(feTurbulence);
+		filter.appendChild(feDisplacement);
+		defs.appendChild(filter);
+		svg.style.filter = 'url(#hero-liquify-filter)';
+	};
+
+	const tick = () => {
+		currentX = lerp(currentX, targetX, 0.08);
+		currentY = lerp(currentY, targetY, 0.08);
+		applyTransforms();
+		if (Math.abs(currentX - targetX) > 0.01 || Math.abs(currentY - targetY) > 0.01) {
+			frame = requestAnimationFrame(tick);
+		} else {
+			frame = null;
+		}
+	};
+
+	const handleMove = (e: MouseEvent) => {
+		const rect = host?.getBoundingClientRect();
+		const { innerWidth, innerHeight } = window;
+		const x = e.clientX / innerWidth - 0.5;
+		const y = e.clientY / innerHeight - 0.5;
+		targetX = x * 3;
+		targetY = y * 3;
+
+		if (rect) {
+			const localX = (e.clientX - rect.left) / rect.width - 0.5;
+			const localY = (e.clientY - rect.top) / rect.height - 0.5;
+			const dist = Math.sqrt(localX * localX + localY * localY);
+			const magnitude = Math.max(0, 1 - dist * 1.8);
+			liquifyTarget = magnitude * 0.35;
+		} else {
+			liquifyTarget = 0.2;
+		}
+		if (!frame) tick();
+	};
+
+	const init = async () => {
+		if (!host) return;
+		const src = host.dataset.heroSrc;
+		if (!src) return;
+		try {
+			const res = await fetch(src);
+			const text = await res.text();
+			const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+			svgEl = doc.querySelector('svg');
+			if (!svgEl) return;
+			paths = Array.from(svgEl.querySelectorAll<SVGGraphicsElement>('path, g'));
+			injectLiquifyFilter(doc, svgEl);
+			// Clean up attributes that may conflict with transforms
+			paths.forEach((p) => {
+				p.style.willChange = 'transform';
+			});
+			svgEl.style.width = '100%';
+			svgEl.style.height = '100%';
+			host.appendChild(svgEl);
+			if (window.matchMedia('(hover: hover)').matches) {
+				window.addEventListener('mousemove', handleMove, { passive: true });
+				host.addEventListener('pointerenter', startParticlesIfNeeded, { passive: true });
+			}
+			if ('IntersectionObserver' in window) {
+				particlesObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								startParticlesIfNeeded();
+								particlesObserver?.disconnect();
+							}
+						});
+					},
+					{ threshold: 0.15 }
+				);
+				particlesObserver.observe(host);
+			} else {
+				// Fallback: start immediately
+				startParticlesIfNeeded();
+			}
+		} catch (err) {
+			console.error('Failed to load SVG for hero background', err);
+		}
+	};
+
+	if (typeof window !== 'undefined') {
+		init();
+	}
+
+	// Portrait parallax effect (desktop only)
+	const portrait = document.querySelector('[data-parallax-portrait]') as HTMLElement;
+	const getBaseShift = () => {
+		if (!portrait) return '0px';
+		const value = getComputedStyle(portrait).getPropertyValue('--portrait-shift').trim();
+		return value || '0px';
+	};
+	
+	const handlePortraitParallax = () => {
+		if (!portrait) return;
+		
+		const rect = portrait.getBoundingClientRect();
+		const viewportHeight = window.innerHeight;
+		
+		// Only apply parallax when element is in viewport
+		if (rect.top < viewportHeight && rect.bottom > 0) {
+			// Calculate how far through the viewport the element is (0 to 1)
+			const progress = 1 - (rect.top / viewportHeight);
+			// Apply subtle parallax based on scroll progress (max 20px movement)
+			const offset = progress * 20;
+			portrait.style.transform = `translateY(calc(${getBaseShift()} + ${offset}px))`;
+		}
+	};
+	
+	// Use requestAnimationFrame for smooth performance
+	let portraitTicking = false;
+	const onPortraitScroll = () => {
+		if (!portraitTicking) {
+			window.requestAnimationFrame(() => {
+				handlePortraitParallax();
+				portraitTicking = false;
+			});
+			portraitTicking = true;
+		}
+	};
+	
+	if (typeof window !== 'undefined' && window.innerWidth > 1024) {
+		window.addEventListener('scroll', onPortraitScroll, { passive: true });
+		handlePortraitParallax(); // Initial call
+	}
+</script>
+
