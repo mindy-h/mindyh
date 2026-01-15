@@ -10,8 +10,8 @@ import footerBg from '../assets/footer.png';
 			alt=""
 			width={1920}
 			height={1080}
-			format="png"
-			quality={90}
+			format="webp"
+			quality={85}
 			loading="lazy"
 		/>
 	</div>
@@ -22,7 +22,7 @@ import footerBg from '../assets/footer.png';
 			<p class="cta__text">
 				This portfolio reflects how I work: designing with intention, understanding the full system, and taking responsibility from idea through launch.
 			</p>
-			<a href="mailto:mindyhdesigns@gmail.com" class="cta__button">
+			<a href="mailto:mindyh.design@gmail.com" class="cta__button">
 				let's talk
 			</a>
 		</div>
@@ -124,6 +124,11 @@ import footerBg from '../assets/footer.png';
 
 	.cta__button:hover {
 		background: var(--color-accent-dim);
+	}
+
+	.cta__button:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
 	}
 
 	@media (max-width: 768px) {

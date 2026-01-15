@@ -75,6 +75,13 @@ const anchor = (id: string) => `${useHomeAnchors ? '/#' : '#'}${id}`;
 		font-weight: 400;
 	}
 
+	.nav__menu a:focus-visible,
+	.nav__logo:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
 	@media (max-width: 768px) {
 		.nav__container {
 			padding-block: 0.75rem;

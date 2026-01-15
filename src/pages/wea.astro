@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
 import portrait1 from '../assets/persona1.png';
 import portrait2 from '../assets/portrait1.png';
 import portrait3 from '../assets/portrait3.png';
@@ -207,7 +208,15 @@ const portraits = [portrait1, portrait2, portrait3, portrait4];
 				<div class="users-grid">
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={portraits[0].src} alt="CD / RTM Team" />
+							<Image 
+								src={portraits[0]} 
+								alt="CD / RTM Team" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">CD / RTM Team</h4>
 						<p class="user-card__description">
@@ -220,7 +229,15 @@ const portraits = [portrait1, portrait2, portrait3, portrait4];
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={portraits[1].src} alt="Field Representative" />
+							<Image 
+								src={portraits[1]} 
+								alt="Field Representative" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Field Representative</h4>
 						<p class="user-card__description">
@@ -233,7 +250,15 @@ const portraits = [portrait1, portrait2, portrait3, portrait4];
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={portraits[2].src} alt="EAM Reviewer" />
+							<Image 
+								src={portraits[2]} 
+								alt="EAM Reviewer" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">EAM Reviewer</h4>
 						<p class="user-card__description">
@@ -246,7 +271,15 @@ const portraits = [portrait1, portrait2, portrait3, portrait4];
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={portraits[3].src} alt="Wholesaler Partner" />
+							<Image 
+								src={portraits[3]} 
+								alt="Wholesaler Partner" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Wholesaler Partner</h4>
 						<p class="user-card__description">

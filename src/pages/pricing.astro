@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
 import region from '../assets/region.png';
 import manage from '../assets/manage.png';
 import priceops from '../assets/priceops.png';
@@ -197,7 +198,15 @@ import commercial from '../assets/commercial.png';
 				<div class="users-grid">
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={region.src} alt="Region Pricing Analyst" />
+							<Image 
+								src={region} 
+								alt="Region Pricing Analyst" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Region Pricing Analyst</h4>
 						<p class="user-card__description">
@@ -210,7 +219,15 @@ import commercial from '../assets/commercial.png';
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={manage.src} alt="Revenue Management" />
+							<Image 
+								src={manage} 
+								alt="Revenue Management" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Revenue Management</h4>
 						<p class="user-card__description">
@@ -223,7 +240,15 @@ import commercial from '../assets/commercial.png';
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={priceops.src} alt="Price Ops Coordinator" />
+							<Image 
+								src={priceops} 
+								alt="Price Ops Coordinator" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Price Ops Coordinator</h4>
 						<p class="user-card__description">
@@ -236,7 +261,15 @@ import commercial from '../assets/commercial.png';
 
 					<div class="user-card">
 						<div class="user-card__avatar">
-							<img src={commercial.src} alt="Commercial Manager" />
+							<Image 
+								src={commercial} 
+								alt="Commercial Manager" 
+								width={200}
+								height={200}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<h4 class="user-card__role">Commercial Manager</h4>
 						<p class="user-card__description">

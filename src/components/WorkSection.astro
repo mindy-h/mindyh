@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import skylens from '../assets/wea.png';
 import pricing from '../assets/pricing_img.png';
 import phorm from '../assets/phorm.png';
@@ -12,7 +13,15 @@ import arrowRight from '../assets/arrow_right.svg';
 		<div class="work__grid">
 			<a href="/wea" class="work__card fade-in" data-parallax data-speed="0.15">
 				<div class="work__image">
-					<img src={skylens.src} alt="Skylens Light Panels" loading="lazy" />
+					<Image 
+						src={skylens} 
+						alt="WEA Assessment Portal" 
+						width={800}
+						height={600}
+						format="webp"
+						quality={85}
+						loading="lazy"
+					/>
 				</div>
 				<div class="work__body">
 					<p class="work__eyebrow">business process</p>
@@ -20,7 +29,7 @@ import arrowRight from '../assets/arrow_right.svg';
 					<p class="work__text">
 						Unified a fragmented compliance workflow for 500+ wholesaler partners into a single mobile-first portal.
 					</p>
-					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" /></span>
+					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" aria-hidden="true" /></span>
 				</div>
 			</a>
 
@@ -29,7 +38,15 @@ import arrowRight from '../assets/arrow_right.svg';
 
 			<a href="/pricing" class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
 				<div class="work__image">
-					<img src={pricing.src} alt="Everyday Pricing" loading="lazy" />
+					<Image 
+						src={pricing} 
+						alt="Everyday Pricing" 
+						width={800}
+						height={600}
+						format="webp"
+						quality={85}
+						loading="lazy"
+					/>
 				</div>
 				<div class="work__body">
 					<p class="work__eyebrow">business process</p>
@@ -37,7 +54,7 @@ import arrowRight from '../assets/arrow_right.svg';
 					<p class="work__text">
 						Mapped scattered workflows into a single tool to ship pricing changes with confidence.
 					</p>
-					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" /></span>
+					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" aria-hidden="true" /></span>
 				</div>
 			</a>
 		</div>
@@ -174,6 +191,11 @@ import arrowRight from '../assets/arrow_right.svg';
 		transform: translateX(4px);
 	}
 
+	.work__card:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 4px;
+		border-radius: 8px;
+	}
 
 	@media (max-width: 640px) {
 		.work {

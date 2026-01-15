@@ -14,7 +14,7 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Grenze:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Grenze:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..600;1,6..12,400..600&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -69,6 +69,31 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		overflow-x: hidden;
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+
+	/* Skip to main content link for keyboard navigation */
+	.skip-link {
+		position: absolute;
+		top: -40px;
+		left: 0;
+		background: var(--color-accent);
+		color: var(--color-bg);
+		padding: 8px 16px;
+		text-decoration: none;
+		z-index: 1000;
+		font-weight: 600;
+	}
+
+	.skip-link:focus {
+		top: 0;
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
 	body {
 		margin: 0;
 		width: 100%;
@@ -84,25 +109,12 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		font-weight: 400;
 	}
 
-	/* Grenze weight helpers */
-	.grenze-thin { font-family: 'Grenze', serif; font-weight: 100; font-style: normal; }
-	.grenze-extralight { font-family: 'Grenze', serif; font-weight: 200; font-style: normal; }
+	/* Grenze weight helpers - only include used weights */
 	.grenze-light { font-family: 'Grenze', serif; font-weight: 300; font-style: normal; }
 	.grenze-regular { font-family: 'Grenze', serif; font-weight: 400; font-style: normal; }
 	.grenze-medium { font-family: 'Grenze', serif; font-weight: 500; font-style: normal; }
-	.grenze-semibold { font-family: 'Grenze', serif; font-weight: 600; font-style: normal; }
-	.grenze-bold { font-family: 'Grenze', serif; font-weight: 700; font-style: normal; }
-	.grenze-extrabold { font-family: 'Grenze', serif; font-weight: 800; font-style: normal; }
-	.grenze-black { font-family: 'Grenze', serif; font-weight: 900; font-style: normal; }
-	.grenze-thin-italic { font-family: 'Grenze', serif; font-weight: 100; font-style: italic; }
-	.grenze-extralight-italic { font-family: 'Grenze', serif; font-weight: 200; font-style: italic; }
 	.grenze-light-italic { font-family: 'Grenze', serif; font-weight: 300; font-style: italic; }
 	.grenze-regular-italic { font-family: 'Grenze', serif; font-weight: 400; font-style: italic; }
-	.grenze-medium-italic { font-family: 'Grenze', serif; font-weight: 500; font-style: italic; }
-	.grenze-semibold-italic { font-family: 'Grenze', serif; font-weight: 600; font-style: italic; }
-	.grenze-bold-italic { font-family: 'Grenze', serif; font-weight: 700; font-style: italic; }
-	.grenze-extrabold-italic { font-family: 'Grenze', serif; font-weight: 800; font-style: italic; }
-	.grenze-black-italic { font-family: 'Grenze', serif; font-weight: 900; font-style: italic; }
 
 	p {
 		font-family: var(--font-sans);
@@ -115,6 +127,20 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 	a {
 		color: inherit;
 		text-decoration: none;
+	}
+
+	/* Focus indicators for accessibility */
+	a:focus-visible,
+	button:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	/* Remove default focus outline for mouse users */
+	a:focus:not(:focus-visible),
+	button:focus:not(:focus-visible) {
+		outline: none;
 	}
 
 	img {

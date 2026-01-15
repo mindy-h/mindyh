@@ -11,9 +11,10 @@ import floralHero from '../assets/floral_hero.png';
 			alt=""
 			width={1920}
 			height={1080}
-			format="png"
-			quality={90}
+			format="webp"
+			quality={85}
 			loading="eager"
+			fetchpriority="high"
 		/>
 	</div>
 	<div class="hero__gradient" aria-hidden="true"></div>
@@ -138,6 +139,7 @@ import floralHero from '../assets/floral_hero.png';
 		z-index: 1;
 		pointer-events: none;
 		opacity: 0.5;
+		will-change: contents;
 	}
 
 	.animated-lines {
@@ -311,19 +313,29 @@ import floralHero from '../assets/floral_hero.png';
 	const lines = document.querySelectorAll('.line');
 	const canvas = document.querySelector('.hero__particles') as HTMLCanvasElement | null;
 	
-	// Line parallax
+	// Line parallax - throttled for performance
 	if (lines.length && window.matchMedia('(hover: hover)').matches) {
-		document.addEventListener('mousemove', (e) => {
-			const x = e.clientX / window.innerWidth;
-			const y = e.clientY / window.innerHeight;
-			
-			lines.forEach((line, index) => {
-				const speed = (index + 1) * 0.2;
-				const offsetX = (x - 0.5) * 50 * speed;
-				const offsetY = (y - 0.5) * 50 * speed;
-				(line as HTMLElement).style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-			});
-		});
+		let ticking = false;
+		const handleMouseMove = (e: MouseEvent) => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					const x = e.clientX / window.innerWidth;
+					const y = e.clientY / window.innerHeight;
+					
+					lines.forEach((line, index) => {
+						const speed = (index + 1) * 0.2;
+						const offsetX = (x - 0.5) * 50 * speed;
+						const offsetY = (y - 0.5) * 50 * speed;
+						(line as HTMLElement).style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+					});
+					
+					ticking = false;
+				});
+				ticking = true;
+			}
+		};
+		
+		document.addEventListener('mousemove', handleMouseMove, { passive: true });
 	}
 
 	// Particle animation
@@ -340,7 +352,9 @@ import floralHero from '../assets/floral_hero.png';
 		};
 
 		const initParticles = () => {
-			const count = 100;
+			// Reduce particle count on mobile for better performance
+			const isMobile = window.innerWidth < 768;
+			const count = isMobile ? 50 : 100;
 			particles = Array.from({ length: count }).map(() => ({
 				x: Math.random() * canvas.width,
 				y: Math.random() * canvas.height,

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import clarityIco from '../assets/clarity_ico.svg';
 import keyIcon from '../assets/key.svg';
 import gauntlet from '../assets/guantlet.svg';
@@ -19,7 +20,7 @@ import clarity from '../assets/clarity.png';
 		<div class="process__cards">
 			<article class="process__card fade-in" data-parallax data-speed="0.15">
 				<div class="process__icon">
-					<img src={clarityIco.src} alt="" />
+					<img src={clarityIco.src} alt="" aria-hidden="true" />
 				</div>
 				<h3 class="process__card-title">Clarity from chaos</h3>
 				<p class="process__card-text">I build process where there is none.</p>
@@ -27,7 +28,7 @@ import clarity from '../assets/clarity.png';
 
 			<article class="process__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
 				<div class="process__icon">
-					<img src={keyIcon.src} alt="" />
+					<img src={keyIcon.src} alt="" aria-hidden="true" />
 				</div>
 				<h3 class="process__card-title">Listening is key</h3>
 				<p class="process__card-text">The best design starts with paying attention.</p>
@@ -35,7 +36,7 @@ import clarity from '../assets/clarity.png';
 
 			<article class="process__card fade-in" data-parallax data-speed="0.25" style="transition-delay: 0.2s;">
 				<div class="process__icon">
-					<img src={gauntlet.src} alt="" />
+					<img src={gauntlet.src} alt="" aria-hidden="true" />
 				</div>
 				<h3 class="process__card-title">Hands on work</h3>
 				<p class="process__card-text">From user flows to visual details.</p>
@@ -67,7 +68,15 @@ import clarity from '../assets/clarity.png';
 							<img src={claude.src} alt="Claude" />
 						</div>
 						<div class="tool-icon tool-icon--clarity">
-							<img src={clarity.src} alt="Clarity" />
+							<Image 
+								src={clarity} 
+								alt="Clarity" 
+								width={65}
+								height={65}
+								format="webp"
+								quality={80}
+								loading="lazy"
+							/>
 						</div>
 						<div class="tool-icon">
 							<img src={ps.src} alt="Photoshop" />
@@ -99,6 +108,7 @@ import clarity from '../assets/clarity.png';
 		z-index: 0;
 		pointer-events: none;
 		opacity: 0.5;
+		will-change: contents;
 	}
 
 	.process__container {
@@ -254,6 +264,12 @@ import clarity from '../assets/clarity.png';
 		object-fit: contain;
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		.process__card {
+			transition: none;
+		}
+	}
+
 	@media (max-width: 1024px) {
 		.process__cards {
 			grid-template-columns: 1fr;
@@ -327,7 +343,9 @@ import clarity from '../assets/clarity.png';
 		};
 
 		const initParticles = () => {
-			const count = 80;
+			// Reduce particle count on mobile for better performance
+			const isMobile = window.innerWidth < 768;
+			const count = isMobile ? 40 : 80;
 			particles = Array.from({ length: count }).map(() => ({
 				x: Math.random() * canvas.width,
 				y: Math.random() * canvas.height,
