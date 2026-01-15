@@ -8,6 +8,20 @@ import priceops from '../assets/priceops.png';
 import commercial from '../assets/commercial.png';
 ---
 
+<script>
+	const correctPassword = "mindyh-access";
+	const entered = sessionStorage.getItem('caseStudyAccess');
+	
+	if (entered !== correctPassword) {
+	  const password = prompt('Enter password to view case studies:');
+	  if (password === correctPassword) {
+		sessionStorage.setItem('caseStudyAccess', password);
+	  } else {
+		window.location.href = '/';
+	  }
+	}
+  </script>
+
 <Layout title="Enterprise Pricing - Mindy House">
 	<Navigation useHomeAnchors />
 	<main class="pricing-study">

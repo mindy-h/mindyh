@@ -79,8 +79,15 @@ const snapshots = [
 				and lead UX strategy for our MarTech organization, working on brands you definitely know.
 			</p>
 			<div class="about__actions">
-				<Button href="https://www.linkedin.com/in/mindyhouse/" variant="secondary" showArrow={false}>linkedin</Button>
-				
+				<Button 
+					href="https://www.linkedin.com/in/mindyhouse/" 
+					variant="secondary" 
+					showArrow={false}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					linkedin
+				</Button>
 			</div>
 		</div>
 
@@ -161,7 +168,7 @@ const snapshots = [
 		width: 100%;
 		height: calc(100% - 150px);
 		z-index: 0;
-		opacity: 0.2;
+		opacity: 0.25;
 		mix-blend-mode: overlay;
 		overflow: hidden;
 	}
@@ -221,7 +228,7 @@ const snapshots = [
 
 	.about__title {
 		font-family: var(--font-display);
-		font-size: 4rem;
+		font-size: 3.5rem;
 		color: var(--color-accent);
 		margin-bottom: 1rem;
 		font-weight: 300;

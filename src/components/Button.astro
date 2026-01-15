@@ -6,13 +6,27 @@ interface Props {
 	variant?: 'primary' | 'secondary';
 	class?: string;
 	showArrow?: boolean;
+	target?: string;
+	rel?: string;
 }
 
-const { href, variant = 'primary', class: className, showArrow = true } = Astro.props;
+const { 
+	href, 
+	variant = 'primary', 
+	class: className, 
+	showArrow = true,
+	target,
+	rel 
+} = Astro.props;
 const Element = href ? 'a' : 'button';
 ---
 
-<Element href={href} class:list={['btn', `btn--${variant}`, showArrow ? '' : 'btn--no-arrow', className]}>
+<Element 
+	href={href}
+	target={target}
+	rel={rel}
+	class:list={['btn', `btn--${variant}`, showArrow ? '' : 'btn--no-arrow', className]}
+>
 	<slot />
 	{showArrow && (
 		<div class="btn__arrow">
