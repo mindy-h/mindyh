@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { Image, getImage } from 'astro:assets';
 import statue from '../assets/main-image.png';
 import torn from '../assets/torn.svg';
 import outlineTitle from '../assets/outline_title.svg';
@@ -9,11 +10,14 @@ import arrow from '../assets/arrow.svg';
 import clouds from '../assets/clouds.png';
 import noise from '../assets/bgtexture.jpg';
 import layer from '../assets/hero_bg.svg';
+
+const cloudsOpt = await getImage({ src: clouds, format: 'webp', quality: 80, width: 1920, height: 1080 });
+const noiseOpt = await getImage({ src: noise, format: 'webp', quality: 80, width: 1920, height: 1080 });
 ---
 
 <Layout title="Grid Reveal • Mindy House">
 	<Navigation />
-	<main class="page" style={`--noise: url(${noise.src}); --clouds: url(${clouds.src}); --layer: url(${layer.src});`}>
+	<main class="page" style={`--noise: url(${noiseOpt.src}); --clouds: url(${cloudsOpt.src}); --layer: url(${layer.src});`}>
 		<section class="hero">
 			<div class="hero-bg">
 				<div class="hero-grad"></div>
@@ -56,7 +60,16 @@ import layer from '../assets/hero_bg.svg';
 				</div>
 				<div class="how-statue">
 					<div class="statue-glow"></div>
-					<img src={statue.src} alt="Statue" />
+					<Image 
+						src={statue} 
+						alt="Statue" 
+						width={600}
+						height={800}
+						format="webp"
+						quality={85}
+						loading="lazy"
+						decoding="async"
+					/>
 				</div>
 			</div>
 		</section>

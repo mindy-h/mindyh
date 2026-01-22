@@ -17,6 +17,7 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		<link href="https://fonts.googleapis.com/css2?family=Grenze:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,400..600;1,6..12,400..600&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<slot name="head" />
 	</head>
 	<body>
 		<slot />
@@ -121,7 +122,7 @@ const { title = 'Mindy House | Designer. Listener. Process builder.' } = Astro.p
 		font-optical-sizing: auto;
 		font-variation-settings: "wdth" 100, "YTLC" 500;
 		line-height: 1.6;
-		color: #e7d2b4
+		color: #e7d2b4;
 	}
 
 	a {
