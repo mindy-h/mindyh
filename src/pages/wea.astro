@@ -12,19 +12,7 @@ import portrait4 from '../assets/portrait4.png';
 const portraits = [portrait1, portrait2, portrait3, portrait4];
 ---
 
-<script>
-	const correctPassword = "mindyh-access";
-	const entered = sessionStorage.getItem('caseStudyAccess');
-	
-	if (entered !== correctPassword) {
-	  const password = prompt('Enter password to view case studies:');
-	  if (password === correctPassword) {
-		sessionStorage.setItem('caseStudyAccess', password);
-	  } else {
-		window.location.href = '/';
-	  }
-	}
-  </script>
+
 
 <Layout title="WEA Assessment Portal - Mindy House">
 	<Navigation useHomeAnchors />
