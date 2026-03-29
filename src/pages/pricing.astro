@@ -7,6 +7,8 @@ import region from '../assets/region.png';
 import manage from '../assets/manage.png';
 import priceops from '../assets/priceops.png';
 import commercial from '../assets/commercial.png';
+import processmap from '../assets/processmap.png';
+import pricingscreen from '../assets/pricingscreen.png';
 ---
 
 <script>
@@ -29,14 +31,62 @@ import commercial from '../assets/commercial.png';
 		<!-- Hero Section -->
 		<section class="hero">
 			<div class="container hero__container">
-				<div class="hero__content">
-					<h1 class="hero__title">Everyday Pricing</h1>
-					<p class="hero__subtitle">
-						Pricing at a company this size doesn't live in one place. I mapped the chaos, defined the real workflow, and designed a tool people would actually use.
-					</p>
+				<div class="hero__layout">
+					<div class="hero__content">
+						<h1 class="hero__title">Everyday Pricing</h1>
+						<p class="hero__subtitle">
+							Pricing at a company this size doesn't live in one place. I mapped the chaos, defined the real workflow, and designed a tool people would actually use.
+						</p>
+					</div>
+					<div class="hero__media">
+						<button
+							type="button"
+							class="hero-screenshot-trigger magnify-hover"
+							id="pricing-screen-open"
+							aria-haspopup="dialog"
+							aria-controls="pricing-screen-modal"
+							aria-expanded="false"
+							aria-label="Open pricing screen screenshot full size"
+						>
+							<Image
+								src={pricingscreen}
+								alt=""
+								width={1024}
+								height={620}
+								format="webp"
+								quality={85}
+								loading="eager"
+								decoding="async"
+							/>
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
+
+		<div
+			class="process-map-modal"
+			id="pricing-screen-modal"
+			role="dialog"
+			aria-modal="true"
+			aria-labelledby="pricing-screen-modal-title"
+			hidden
+		>
+			<button type="button" class="process-map-modal__backdrop" data-close-modal aria-label="Close dialog"></button>
+			<div class="process-map-modal__content process-map-modal__content--pricing-screen">
+				<button type="button" class="process-map-modal__close" data-close-modal aria-label="Close">×</button>
+				<h2 id="pricing-screen-modal-title" class="process-map-modal__title">Pricing tool interface</h2>
+				<img
+					class="process-map-modal__img process-map-modal__img--pricing-screen"
+					src={pricingscreen.src}
+					width={pricingscreen.width}
+					height={pricingscreen.height}
+					alt="Pricing tool interface screenshot"
+					loading="eager"
+					decoding="async"
+				/>
+			</div>
+		</div>
 
 		<!-- Meta Info Section -->
 		<section class="meta">
@@ -298,6 +348,54 @@ import commercial from '../assets/commercial.png';
 					<span class="section__number">V.</span>
 					<h2 class="section__title">Process</h2>
 				</div>
+
+				<h3 class="subsection-title">Process Map Figma Artifact</h3>
+				<div class="process-map-figure">
+					<button
+						type="button"
+						class="process-map-trigger magnify-hover"
+						id="process-map-open"
+						aria-haspopup="dialog"
+						aria-controls="process-map-modal"
+						aria-expanded="false"
+						aria-label="Open Process Map Figma Artifact full size"
+					>
+						<Image
+							src={processmap}
+							alt=""
+							width={900}
+							height={569}
+							format="webp"
+							quality={85}
+							loading="lazy"
+							decoding="async"
+						/>
+					</button>
+				</div>
+
+				<div
+					class="process-map-modal"
+					id="process-map-modal"
+					role="dialog"
+					aria-modal="true"
+					aria-labelledby="process-map-modal-title"
+					hidden
+				>
+					<button type="button" class="process-map-modal__backdrop" data-close-modal aria-label="Close dialog"></button>
+					<div class="process-map-modal__content">
+						<button type="button" class="process-map-modal__close" data-close-modal aria-label="Close">×</button>
+						<h2 id="process-map-modal-title" class="process-map-modal__title">Process Map Figma Artifact</h2>
+						<img
+							class="process-map-modal__img"
+							src={processmap.src}
+							width={processmap.width}
+							height={processmap.height}
+							alt="Process map Figma artifact"
+							loading="eager"
+							decoding="async"
+						/>
+					</div>
+				</div>
 				
 				<h3 class="subsection-title subsection-title--user-journey">User Journey</h3>
 				
@@ -405,6 +503,58 @@ import commercial from '../assets/commercial.png';
 		</section>
 	</main>
 	<Footer useHomeAnchors />
+
+	<script>
+		// @ts-nocheck
+		(() => {
+			const pairs = [
+				{ openId: 'process-map-open', modalId: 'process-map-modal' },
+				{ openId: 'pricing-screen-open', modalId: 'pricing-screen-modal' },
+			];
+
+			function closePair(openBtn, modal, focusOpener = true) {
+				modal.hidden = true;
+				openBtn.setAttribute('aria-expanded', 'false');
+				document.body.style.overflow = '';
+				if (focusOpener) openBtn.focus();
+			}
+
+			function openPair(openBtn, modal) {
+				pairs.forEach(({ openId, modalId }) => {
+					const m = document.getElementById(modalId);
+					const b = document.getElementById(openId);
+					if (m && b && m !== modal && !m.hidden) closePair(b, m, false);
+				});
+				modal.hidden = false;
+				document.body.style.overflow = 'hidden';
+				openBtn.setAttribute('aria-expanded', 'true');
+			}
+
+			pairs.forEach(({ openId, modalId }) => {
+				const openBtn = document.getElementById(openId);
+				const modal = document.getElementById(modalId);
+				if (!openBtn || !modal) return;
+				const closers = modal.querySelectorAll('[data-close-modal]');
+
+				openBtn.addEventListener('click', () => openPair(openBtn, modal));
+				closers.forEach((el) =>
+					el.addEventListener('click', () => closePair(openBtn, modal)),
+				);
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key !== 'Escape') return;
+				for (const { openId, modalId } of pairs) {
+					const openBtn = document.getElementById(openId);
+					const modal = document.getElementById(modalId);
+					if (openBtn && modal && !modal.hidden) {
+						closePair(openBtn, modal);
+						break;
+					}
+				}
+			});
+		})();
+	</script>
 </Layout>
 
 <style>
@@ -418,8 +568,70 @@ import commercial from '../assets/commercial.png';
 		padding: 6rem 0 3rem;
 	}
 
+	.hero__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, min(44%, 480px));
+		gap: clamp(1.75rem, 4vw, 3rem);
+		align-items: center;
+	}
+
 	.hero__content {
-		max-width: 850px;
+		max-width: 42rem;
+		min-width: 0;
+	}
+
+	.hero__media {
+		min-width: 0;
+	}
+
+	.hero-screenshot-trigger {
+		display: block;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border: none;
+		background: transparent;
+		cursor: zoom-in;
+		border-radius: 8px;
+		position: relative;
+		overflow: hidden;
+		line-height: 0;
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+	}
+
+	.hero-screenshot-trigger:focus-visible {
+		outline: 2px solid #d0b65f;
+		outline-offset: 4px;
+	}
+
+	.hero-screenshot-trigger.magnify-hover :global(img) {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		vertical-align: middle;
+		transition: transform 0.25s ease;
+	}
+
+	.hero-screenshot-trigger.magnify-hover:hover :global(img) {
+		transform: scale(1.02);
+	}
+
+	.hero-screenshot-trigger.magnify-hover::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 8px;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		background:
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23d0b65f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E")
+				center / 48px 48px no-repeat,
+			rgba(33, 32, 28, 0.4);
+	}
+
+	.hero-screenshot-trigger.magnify-hover:hover::after {
+		opacity: 1;
 	}
 
 	.hero__title {
@@ -679,6 +891,157 @@ import commercial from '../assets/commercial.png';
 	.subsection-title--user-journey {
 		font-size: 1.75rem;
 		margin-bottom: 1.5rem;
+	}
+
+	.process-map-figure {
+		margin: 0 0 2.5rem;
+		max-width: min(720px, 100%);
+	}
+
+	.process-map-trigger {
+		display: block;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border: none;
+		background: transparent;
+		cursor: zoom-in;
+		border-radius: 8px;
+		position: relative;
+		overflow: hidden;
+		line-height: 0;
+	}
+
+	.process-map-trigger:focus-visible {
+		outline: 2px solid #d0b65f;
+		outline-offset: 4px;
+	}
+
+	.process-map-trigger.magnify-hover :global(img) {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+		vertical-align: middle;
+		transition: transform 0.25s ease;
+	}
+
+	.process-map-trigger.magnify-hover:hover :global(img) {
+		transform: scale(1.02);
+	}
+
+	.process-map-trigger.magnify-hover::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 8px;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		background:
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23d0b65f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E")
+				center / 48px 48px no-repeat,
+			rgba(33, 32, 28, 0.4);
+	}
+
+	.process-map-trigger.magnify-hover:hover::after {
+		opacity: 1;
+	}
+
+	.process-map-modal[hidden] {
+		display: none !important;
+	}
+
+	.process-map-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: min(4vw, 2rem);
+		box-sizing: border-box;
+	}
+
+	.process-map-modal__backdrop {
+		position: absolute;
+		inset: 0;
+		border: none;
+		padding: 0;
+		margin: 0;
+		background: rgba(12, 11, 9, 0.92);
+		cursor: pointer;
+	}
+
+	.process-map-modal__content {
+		position: relative;
+		z-index: 1;
+		max-width: min(95vw, 1233px);
+		max-height: 90vh;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.process-map-modal__content--pricing-screen {
+		max-width: min(95vw, 2259px);
+	}
+
+	.process-map-modal__title {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.process-map-modal__close {
+		position: absolute;
+		top: 0.35rem;
+		right: 0.35rem;
+		z-index: 2;
+		width: 2.5rem;
+		height: 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: 1px solid rgba(212, 182, 95, 0.5);
+		border-radius: 4px;
+		background: rgba(33, 32, 28, 0.95);
+		color: #d0b65f;
+		font-size: 1.75rem;
+		line-height: 1;
+		cursor: pointer;
+		transition: background 0.15s ease, border-color 0.15s ease;
+	}
+
+	.process-map-modal__close:hover {
+		background: rgba(50, 48, 42, 0.98);
+		border-color: #d0b65f;
+	}
+
+	.process-map-modal__close:focus-visible {
+		outline: 2px solid #d0b65f;
+		outline-offset: 2px;
+	}
+
+	.process-map-modal__img {
+		display: block;
+		max-width: min(95vw, 1233px);
+		max-height: 90vh;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: 8px;
+		box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+	}
+
+	.process-map-modal__img--pricing-screen {
+		max-width: min(95vw, 2259px);
 	}
 
 	/* Users Grid */
@@ -973,6 +1336,19 @@ import commercial from '../assets/commercial.png';
 
 		.flow-arrow--sm {
 			font-size: 1rem;
+		}
+	}
+
+	@media (max-width: 900px) {
+		.hero__layout {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.hero__media {
+			max-width: min(440px, 100%);
+			width: fit-content;
+			justify-self: start;
 		}
 	}
 
