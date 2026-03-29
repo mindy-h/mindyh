@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import skylens from '../assets/wea.png';
 import pricing from '../assets/pricing_img.png';
-import phorm from '../assets/phorm.png';
+import budweiser from '../assets/budweiser.png';
+import cutwater from '../assets/cutwater.png';
 import arrowRight from '../assets/arrow_right.svg';
 ---
 
@@ -59,6 +60,56 @@ import arrowRight from '../assets/arrow_right.svg';
 					<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" aria-hidden="true" /></span>
 				</div>
 			</a>
+
+
+
+			<div class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
+				<div class="work__image">
+					<Image 
+						src={budweiser} 
+						alt="Budweiser" 
+						width={800}
+						height={351}
+						format="webp"
+						quality={88}
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">Web Design</p>
+					<h3 class="work__heading">Budweiser 150th Anniversary</h3>
+					<p class="work__text">
+						Brand team collaboration reimagining Budweiser.com to celebrate the brand's 150th anniversary. Developed through full brand review; pending release.
+					</p>
+				<!--<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" aria-hidden="true" /></span>-->
+				</div>
+			</div>
+
+			<div class="work__card fade-in" data-parallax data-speed="0.2" style="transition-delay: 0.1s;">
+				<div class="work__image">
+					<Image 
+						src={cutwater} 
+						alt="Cutwater Spirits" 
+						width={800}
+						height={351}
+						format="webp"
+						quality={88}
+						loading="lazy"
+						decoding="async"
+					/>
+				</div>
+				<div class="work__body">
+					<p class="work__eyebrow">web design</p>
+					<h3 class="work__heading">Cutwater Spirits</h3>
+					<p class="work__text">
+						Brand team collaboration to redesign Cutwater.com as part of a tech stack transition. Developed through full brand review; pending release.
+					</p>
+				<!--<span class="work__link"><img src={arrowRight.src} alt="" class="work__arrow" aria-hidden="true" /></span>-->
+				</div>
+			</div>
+
+
 		</div>
 	</div>
 	<div class="work__blur"></div>
@@ -111,10 +162,14 @@ import arrowRight from '../assets/arrow_right.svg';
 		/* Initial state - below and faded */
 		opacity: 0;
 		transform: translateY(60px);
-		transition: 
+		transition:
 			opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
 			transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
 			box-shadow 0.3s ease;
+	}
+
+	.work__card:not(a) {
+		cursor: default;
 	}
 
 	.work__card:nth-child(2) {
@@ -129,6 +184,11 @@ import arrowRight from '../assets/arrow_right.svg';
 	.work__card.is-visible:hover {
 		transform: translateY(-8px);
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	}
+
+	.work__card:not(a).is-visible:hover {
+		transform: translateY(0);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 	}
 
 	.work__image {
